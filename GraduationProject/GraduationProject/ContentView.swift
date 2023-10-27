@@ -20,17 +20,14 @@ struct ContentView: View {
                     .ignoresSafeArea(edges: .bottom)
                     .onTapGesture {
                         isFocused = false
+                        currentStatus = .isNotRecording
                     }
                 VStack(spacing: 30) {
+                    recordingStatus
                     inputField
-                    Button("Analyze") {
-                        isFetching = true
-                        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-                            showRecommendedContent = true
-                            isFetching = false
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
+                    analyze
+                    Spacer()
+                        .frame(width: 0, height: 40)
                 }
                 ProgressView()
                     .scaleEffect(2)
@@ -68,6 +65,36 @@ struct ContentView: View {
             .frame(width: 300, height: 300)
             .shadow(radius: 10)
             .focused($isFocused)
+            .onTapGesture {
+                currentStatus = .isRecording
+            }
+    }
+    
+    private var analyze: some View {
+        Button("Analyze") {
+            isFetching = true
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+                showRecommendedContent = true
+                isFetching = false
+            }
+        }
+        .buttonStyle(.borderedProminent)
+    }
+    
+    @State private var currentStatus = RecordingStatus.isNotRecording
+    
+    private enum RecordingStatus: String {
+        case isRecording = "감정을 분석하고 있습니다."
+        case isNotRecording = "감정을 분석하고 있지 않습니다."
+    }
+    
+    private var recordingStatus: some View {
+        HStack {
+            Image(systemName: "face.smiling.inverse")
+            Text(currentStatus.rawValue)
+        }
+            .foregroundStyle(.secondary)
+            .font(.callout)
     }
 }
 
