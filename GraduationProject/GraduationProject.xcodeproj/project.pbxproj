@@ -13,6 +13,7 @@
 		4A1762AE2AEBAFF700D14315 /* bear.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A1762AC2AEBAFF700D14315 /* bear.json */; };
 		4A1762B02AEBB17700D14315 /* ContentRecommender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1762AF2AEBB17700D14315 /* ContentRecommender.swift */; };
 		4A1762B42AEBB4A700D14315 /* Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1762B32AEBB4A700D14315 /* Description.swift */; };
+		4A1762BA2AEBBA5500D14315 /* SheepAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1762B92AEBBA5500D14315 /* SheepAnimation.swift */; };
 		4A34B04F2AD63C2200B32F26 /* GraduationProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A34B04E2AD63C2200B32F26 /* GraduationProjectApp.swift */; };
 		4A34B0512AD63C2200B32F26 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A34B0502AD63C2200B32F26 /* ContentView.swift */; };
 		4A34B0532AD63C2400B32F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A34B0522AD63C2400B32F26 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		4A1762AC2AEBAFF700D14315 /* bear.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bear.json; sourceTree = "<group>"; };
 		4A1762AF2AEBB17700D14315 /* ContentRecommender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRecommender.swift; sourceTree = "<group>"; };
 		4A1762B32AEBB4A700D14315 /* Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Description.swift; sourceTree = "<group>"; };
+		4A1762B92AEBBA5500D14315 /* SheepAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheepAnimation.swift; sourceTree = "<group>"; };
 		4A34B04B2AD63C2200B32F26 /* GraduationProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraduationProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A34B04E2AD63C2200B32F26 /* GraduationProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectApp.swift; sourceTree = "<group>"; };
 		4A34B0502AD63C2200B32F26 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				4A1762A62AEBAF9600D14315 /* LottieView.swift */,
 				4A1762AF2AEBB17700D14315 /* ContentRecommender.swift */,
 				4A1762B32AEBB4A700D14315 /* Description.swift */,
+				4A1762B92AEBBA5500D14315 /* SheepAnimation.swift */,
 				4A34B0522AD63C2400B32F26 /* Assets.xcassets */,
 				4A1762AC2AEBAFF700D14315 /* bear.json */,
 				4A1762AB2AEBAFF700D14315 /* congratulations.json */,
@@ -182,6 +185,7 @@
 				4A34B04F2AD63C2200B32F26 /* GraduationProjectApp.swift in Sources */,
 				4A1762B42AEBB4A700D14315 /* Description.swift in Sources */,
 				4A1762A72AEBAF9600D14315 /* LottieView.swift in Sources */,
+				4A1762BA2AEBBA5500D14315 /* SheepAnimation.swift in Sources */,
 				4A1762B02AEBB17700D14315 /* ContentRecommender.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

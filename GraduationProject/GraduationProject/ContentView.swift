@@ -9,40 +9,46 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isFetching = false
+    @State private var showDescription = false
     @State private var showRecommendedContent = false
     
     var body: some View {
         NavigationStack {
             ZStack {
-                ProgressView()
-                    .opacity(isFetching ? 1 : 0)
                 VStack(spacing: 30) {
                     inputField
-                    NavigationLink {
-                        ContentRecommender()
-                    } label: {
-                        Text("Analyze")
-                            .foregroundStyle(.white)
-                            .padding(10)
-                            .background {
-                                Color.blue
-                                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                            }
+                    Button("Analyze") {
+                        isFetching = true
+                        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+                            showRecommendedContent = true
+                            isFetching = false
+                        }
                     }
+                    .buttonStyle(.borderedProminent)
+                    Spacer()
+                        .frame(height: 50)
                 }
+                ProgressView()
+                    .scaleEffect(2)
+                    .opacity(isFetching ? 1 : 0)
             }
+            .navigationDestination(isPresented: $showRecommendedContent) {
+                ContentRecommender()
+            }
+            .navigationTitle("Snooze")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        
+                        showDescription = true
                     } label: {
                         Image(systemName: "questionmark.circle")
                     }
                 }
             }
         }
-        .sheet(isPresented: $showRecommendedContent) {
-            ContentRecommender()
+        .sheet(isPresented: $showDescription) {
+            Description()
         }
     }
     
@@ -55,15 +61,6 @@ struct ContentView: View {
             .autocorrectionDisabled(true)
             .frame(width: 300, height: 300)
             .shadow(radius: 10)
-    }
-    
-    private var analyze: some View {
-        Button {
-            showRecommendedContent = true
-        } label: {
-            Text("Analyze")
-        }
-        .buttonStyle(.borderedProminent)
     }
 }
 
