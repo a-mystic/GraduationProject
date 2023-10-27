@@ -15,6 +15,12 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                Color.gray
+                    .opacity(0.1)
+                    .ignoresSafeArea(edges: .bottom)
+                    .onTapGesture {
+                        isFocused = false
+                    }
                 VStack(spacing: 30) {
                     inputField
                     Button("Analyze") {
@@ -25,8 +31,6 @@ struct ContentView: View {
                         }
                     }
                     .buttonStyle(.borderedProminent)
-                    Spacer()
-                        .frame(height: 50)
                 }
                 ProgressView()
                     .scaleEffect(2)
@@ -54,6 +58,8 @@ struct ContentView: View {
     
     @State private var inputs = ""
     
+    @FocusState private var isFocused: Bool
+    
     private var inputField: some View {
         TextEditor(text: $inputs)
             .textFieldStyle(.roundedBorder)
@@ -61,6 +67,7 @@ struct ContentView: View {
             .autocorrectionDisabled(true)
             .frame(width: 300, height: 300)
             .shadow(radius: 10)
+            .focused($isFocused)
     }
 }
 
