@@ -76,6 +76,7 @@ struct ContentView: View {
             DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
                 showRecommendedContent = true
                 isFetching = false
+                currentStatus = .isNotRecording
             }
         }
         .buttonStyle(.borderedProminent)
