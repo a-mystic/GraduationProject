@@ -53,7 +53,7 @@ struct Home: View {
         .sheet(isPresented: $showDescription) {
             Description()
         }
-        .sheet(isPresented: $loginIsNeed) {
+        .fullScreenCover(isPresented: $loginIsNeed) {
             LoginView(loginIsNeeded: $loginIsNeed)
         }
     }
