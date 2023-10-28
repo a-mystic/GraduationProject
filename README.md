@@ -3,5 +3,7 @@
 데모영상
 
 
-Uploading Simulator Screen Recording - iPhone 15 Pro - 2023-10-28 at 11.38.03.mp4…
+https://github.com/a-mystic/GraduationProject/assets/57480798/a500d6b2-c740-4dda-9d04-56bbba585979
+
+
 
