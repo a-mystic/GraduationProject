@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  Home.swift
 //  GraduationProject
 //
 //  Created by a mystic on 10/11/23.
@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct Home: View {
     @State private var isFetching = false
     @State private var showDescription = false
     @State private var showRecommendedContent = false
+    
+    @State private var loginIsNeed = true
     
     var body: some View {
         NavigationStack {
@@ -50,6 +52,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showDescription) {
             Description()
+        }
+        .sheet(isPresented: $loginIsNeed) {
+            LoginView(loginIsNeeded: $loginIsNeed)
         }
     }
     
@@ -100,5 +105,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    Home()
 }
