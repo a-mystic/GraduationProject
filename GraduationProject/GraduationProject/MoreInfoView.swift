@@ -17,6 +17,7 @@ struct MoreInfoView: View {
     @State private var selectedGender = ""
     @State private var selectedAge = ""
     @State private var selectedBadThing = "없음"
+    @State private var hobby = ""
     
     var body: some View {
         NavigationStack {
@@ -42,6 +43,11 @@ struct MoreInfoView: View {
                         }
                         .pickerStyle(WheelPickerStyle())
                     }
+                }
+                Section("취미를 입력해주세요.") {
+                    TextField("ex. 게임", text: $hobby)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
                 }
                 Section("최근 겪은 불편한 사항이 있으시면 선택해주세요.") {
                     Picker("불편사항", selection: $selectedBadThing) {
