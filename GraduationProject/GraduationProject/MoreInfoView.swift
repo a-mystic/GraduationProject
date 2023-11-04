@@ -13,11 +13,12 @@ struct MoreInfoView: View {
     private let genders = ["남성", "여성"]
     private let ages = ["어린이", "청소년", "청년", "중년", "노년"]
     private let badThings = ["없음", "교통카드 결제", "키오스크 사용", "추가예정.."]
+    private let hobbys = ["게임", "독서", "영화", "운동","드라마", "코딩", "요리"]
     
     @State private var selectedGender = ""
     @State private var selectedAge = ""
     @State private var selectedBadThing = "없음"
-    @State private var hobby = ""
+    @State private var selectedHobby = ""
     
     var body: some View {
         NavigationStack {
@@ -45,9 +46,12 @@ struct MoreInfoView: View {
                     }
                 }
                 Section("취미를 입력해주세요.") {
-                    TextField("ex. 게임", text: $hobby)
-                        .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
+                    Picker("취미", selection: $selectedHobby) {
+                        ForEach(hobbys, id: \.self) { age in
+                            Text(age)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
                 }
                 Section("최근 겪은 불편한 사항이 있으시면 선택해주세요.") {
                     Picker("불편사항", selection: $selectedBadThing) {

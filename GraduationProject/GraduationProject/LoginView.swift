@@ -25,6 +25,9 @@ struct LoginView: View {
             }
             .navigationTitle(isLoginMode ? "Login" : "Create Account")
             .background(Color.gray.opacity(0.1))
+            .navigationDestination(isPresented: $needMoreData) {
+                MoreInfoView(loginIsNeeded: $loginIsNeeded)
+            }
         }
         .ignoresSafeArea(.all)
     }
@@ -100,6 +103,7 @@ struct LoginView: View {
         Button {
             if isLoginMode {
                 needMoreData = true
+                isLoginMode = false
             } else {
                 isLoginMode = true
                 email = ""
@@ -116,9 +120,6 @@ struct LoginView: View {
             }
             .background(Color.blue)
             .cornerRadius(10)
-        }
-        .navigationDestination(isPresented: $needMoreData) {
-            MoreInfoView(loginIsNeeded: $loginIsNeeded)
         }
     }
 }
