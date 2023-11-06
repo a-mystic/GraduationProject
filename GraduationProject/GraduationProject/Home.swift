@@ -85,7 +85,7 @@ struct Home: View {
     }
     
     struct BackendTestStruct: Codable {
-        var messages: String
+        var recommend: String
     }
     
     private func analyzeHaru() async {

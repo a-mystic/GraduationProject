@@ -5,5 +5,5 @@ app = FastAPI()
 # uvicorn main:app --reload
 
 @app.get("/")
-async def hello(name: str):
-    return {"messages" : "hello"}
+async def hello():
+    return {"recommend" : "애니메이션"}
