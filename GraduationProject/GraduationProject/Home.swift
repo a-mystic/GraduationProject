@@ -77,14 +77,33 @@ struct Home: View {
     
     private var analyze: some View {
         Button("Analyze") {
-            isFetching = true
+            Task {
+                await analyzeHaru()
+            }
+        }
+        .buttonStyle(.borderedProminent)
+    }
+    
+    struct BackendTestStruct: Codable {
+        var messages: String
+    }
+    
+    private func analyzeHaru() async {
+        isFetching = true
+        let url = "http://127.0.0.1:8000"
+        guard let url = URL(string: url) else { return }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let returnValue = try JSONDecoder().decode(BackendTestStruct.self, from: data)
+            print(returnValue)
             DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
                 showRecommendedContent = true
                 isFetching = false
                 currentStatus = .isNotRecording
             }
+        } catch {
+            print(error)
         }
-        .buttonStyle(.borderedProminent)
     }
     
     @State private var currentStatus = RecordingStatus.isNotRecording
