@@ -90,8 +90,9 @@ struct Home: View {
     
     private func analyzeHaru() async {
         isFetching = true
-        let url = "http://127.0.0.1:8000"
-        guard let url = URL(string: url) else { return }
+        let url = "http://127.0.0.1:8000/recommend?value=0.6&age=elder&hobby=coding"
+        guard let encodingUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: encodingUrl) else { return }
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let returnValue = try JSONDecoder().decode(BackendTestStruct.self, from: data)
