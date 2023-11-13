@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct Home: View {
-    @State private var isFetching = false
     @State private var showDescription = false
     @State private var showRecommendedContent = false
     
@@ -91,7 +90,8 @@ struct Home: View {
     
     @State private var sentiment = ""
     @State private var confidence = ""
-    
+    @State private var isFetching = false
+
     private func analyzeHaru() async {
         isFetching = true
         let url = "http://127.0.0.1:8000/analyzeEmotion?inputText=\(inputs)"
