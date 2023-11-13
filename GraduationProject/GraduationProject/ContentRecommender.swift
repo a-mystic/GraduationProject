@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentRecommender: View {
+    let sentiment: String
+    let confidence: String
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -15,10 +18,10 @@ struct ContentRecommender: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         LottieView(jsonName: "bear", loopMode: .repeat(3))
-                            .frame(width: 200, height: 200)
+                            .frame(width: 170, height: 170)
                         VStack {
                             HStack {
-                                Text("분석한 감정: ")
+                                Text("분석한 감정: \(sentiment)")
                                     .bold()
                                 Text("😀")
                                     .font(.largeTitle)
@@ -32,7 +35,14 @@ struct ContentRecommender: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundStyle(.blue.opacity(0.4))
                         }
-                        SheepAnimation(width: geometry.size.width, height: geometry.size.height/2)
+                        HStack {
+                            Text("분석한 감정 수치: ")
+                            Text("\(confidence)")
+                        }
+                        .bold()
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
+                        SheepAnimation(width: geometry.size.width, height: geometry.size.height/2.3)
                     }
                 }
             }
@@ -41,5 +51,5 @@ struct ContentRecommender: View {
 }
 
 #Preview {
-    ContentRecommender()
+    ContentRecommender(sentiment: "positive", confidence: "positive = 0.5, negative = 0.3, neutral = 0.2")
 }

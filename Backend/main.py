@@ -1,8 +1,28 @@
 from fastapi import FastAPI
-
-app = FastAPI()
-
+import requests
+import json
 # uvicorn main:app --reload
+
+# init
+app = FastAPI()
+client_id = "your client id"
+client_secret = "your client secret"
+apiUrl="https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze"
+
+headers = {
+    "X-NCP-APIGW-API-KEY-ID": client_id,
+    "X-NCP-APIGW-API-KEY": client_secret,
+    "Content-Type": "application/json"
+}
+
+@app.get("/analyzeEmotion")
+async def analyzeEmotion(inputText: str):
+    data = {"content" : inputText}
+    response = requests.post(apiUrl, data=json.dumps(data), headers=headers).json()
+    return {
+        "sentiment" : str(response["document"]["sentiment"]),
+        "confidence" : str(response["document"]["confidence"])
+        }
 
 @app.get("/recommend")
 async def recommend(value: float, age: str, hobby: str):

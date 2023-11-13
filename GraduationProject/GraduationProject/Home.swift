@@ -36,7 +36,7 @@ struct Home: View {
                     .opacity(isFetching ? 1 : 0)
             }
             .navigationDestination(isPresented: $showRecommendedContent) {
-                ContentRecommender()
+                ContentRecommender(sentiment: sentiment, confidence: confidence)
             }
             .navigationTitle("Snooze")
             .navigationBarTitleDisplayMode(.inline)
@@ -85,18 +85,25 @@ struct Home: View {
     }
     
     struct BackendTestStruct: Codable {
-        var recommend: String
+        var sentiment: String
+        var confidence: String
     }
+    
+    @State private var sentiment = ""
+    @State private var confidence = ""
     
     private func analyzeHaru() async {
         isFetching = true
-        let url = "http://127.0.0.1:8000/recommend?value=0.6&age=elder&hobby=coding"
+        let url = "http://127.0.0.1:8000/analyzeEmotion?inputText=\(inputs)"
         guard let encodingUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: encodingUrl) else { return }
+        print(url)
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let returnValue = try JSONDecoder().decode(BackendTestStruct.self, from: data)
-            print(returnValue)
+            sentiment = returnValue.sentiment
+            confidence = returnValue.confidence
+            print(sentiment, confidence)
             DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
                 showRecommendedContent = true
                 isFetching = false
