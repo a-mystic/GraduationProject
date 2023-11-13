@@ -19,6 +19,8 @@ headers = {
 async def analyzeEmotion(inputText: str):
     data = {"content" : inputText}
     response = requests.post(apiUrl, data=json.dumps(data), headers=headers).json()
+    maxConfidence = max(response["document"]["confidence"], key=response["document"]["confidence"].get)
+    print(response["document"]["confidence"][maxConfidence] / 100)
     return {
         "sentiment" : str(response["document"]["sentiment"]),
         "confidence" : str(response["document"]["confidence"])
