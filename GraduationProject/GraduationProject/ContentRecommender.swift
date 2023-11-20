@@ -29,34 +29,52 @@ struct ContentRecommender: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                LottieView(jsonName: "congratulations", loopMode: .playOnce)
-                ScrollView {
-                    VStack(spacing: 20) {
-                        LottieView(jsonName: "bear", loopMode: .repeat(3))
-                            .frame(width: 170, height: 170)
-                        VStack {
-                            HStack {
-                                Text("분석한 감정: ")
-                                    .bold()
-                                Text(analyzedSentiment)
-                                    .font(.largeTitle)
-                            }
-                            .font(.title)
-                            Text("애니메이션 감상하는것을 추천드려요.")
-                                .bold()
-                        }
-                        .padding()
-                        .background {
-                            RoundedRectangle(cornerRadius: 14)
-                                .foregroundStyle(.blue.opacity(0.4))
-                        }
-                        .bold()
-                        .font(.footnote)
-                        .foregroundStyle(.gray)
-                        SheepAnimation(width: geometry.size.width, height: geometry.size.height/2.3)
-                    }
+                VStack(spacing: 20) {
+                    LottieView(jsonName: "bear", loopMode: .repeat(3))
+                        .frame(width: 170, height: 170)
+                    finalEmotion
+//                        SheepAnimation(width: geometry.size.width, height: geometry.size.height/2.3)
+                    recommendCard
+                        .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 0.45)
                 }
             }
+            LottieView(jsonName: "congratulations", loopMode: .playOnce)
+        }
+    }
+    
+    private var finalEmotion: some View {
+        VStack {
+            HStack {
+                Text("최종적으로 분석된 감정: ")
+                    .bold()
+                Text(analyzedSentiment)
+                    .font(.largeTitle)
+            }
+            .font(.title)
+        }
+        .padding()
+        .background {
+            RoundedRectangle(cornerRadius: 14)
+                .foregroundStyle(.blue.opacity(0.4))
+        }
+        .bold()
+        .font(.footnote)
+        .foregroundStyle(.black)
+    }
+    
+    private var recommendCard: some View {
+        ZStack(alignment: .bottom) {
+            Image("recommenderBackground")
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+            Text("\(recommendedContent) 추천드려요")
+                .bold()
+                .font(.title)
+                .foregroundStyle(.white.opacity(0.9))
+                .padding()
+                .padding(.horizontal)
+                .background(.black.opacity(0.3))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
         }
     }
 }

@@ -12,19 +12,12 @@ struct HaruDiary: View {
     
     @State private var showDescription = false
     @State private var showRecommendedContent = false
-    @State private var loginIsNeed = true
+    @State private var loginIsNeed = false
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.gray
-                    .opacity(0.1)
-                    .ignoresSafeArea(edges: .bottom)
-                    .onTapGesture {
-                        isFocused = false
-                        currentStatus = .isNotRecording
-                        emotionManager.stopAnalyzing()
-                    }
+                background
                 VStack(spacing: 30) {
                     inputField
                     analyze
@@ -60,6 +53,17 @@ struct HaruDiary: View {
         }
     }
     
+    private var background: some View {
+        Color.gray
+            .opacity(0.1)
+            .ignoresSafeArea(edges: .bottom)
+            .onTapGesture {
+                isFocused = false
+                currentStatus = .isNotRecording
+                emotionManager.stopAnalyzing()
+            }
+    }
+    
     @State private var inputs = ""
     
     @FocusState private var isFocused: Bool
@@ -80,10 +84,9 @@ struct HaruDiary: View {
     
     private var analyze: some View {
         Button("Analyze") {
-            print(emotionManager.faceEmotions)
-//            Task {
-//                await analyzeHaru()
-//            }
+            Task {
+                await analyzeHaru()
+            }
         }
         .buttonStyle(.borderedProminent)
     }
@@ -99,10 +102,9 @@ struct HaruDiary: View {
 
     private func analyzeHaru() async {
         isFetching = true
-        let url = "http://127.0.0.1:8000/analyzeEmotion?inputText=\(inputs)"
+        let url = "http://127.0.0.1:8000/recommend?inputText=\(inputs)"
         guard let encodingUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: encodingUrl) else { return }
-        print(url)
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let responseData = try JSONDecoder().decode(BackendTestStruct.self, from: data)
