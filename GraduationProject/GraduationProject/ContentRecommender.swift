@@ -13,8 +13,17 @@ struct ContentRecommender: View {
     
     private var analyzedSentiment: String {
         if sentimentValue <= 1 && sentimentValue > 0.5 {
-            return "매우긍정"
-        } else if sentimentValue 
+            return "😄"
+        } else if sentimentValue <= 0.5 && sentimentValue > 0 {
+            return "😀"
+        } else if sentimentValue == 0 {
+            return "😐"
+        } else if sentimentValue >= -0.5 && sentimentValue < 0 {
+            return "🙁"
+        } else if sentimentValue >= -1 && sentimentValue < -0.5 {
+            return "☹️"
+        }
+        return "😐"
     }
     
     var body: some View {
@@ -27,9 +36,9 @@ struct ContentRecommender: View {
                             .frame(width: 170, height: 170)
                         VStack {
                             HStack {
-                                Text("분석한 감정: \(analyzedSentiment)")
+                                Text("분석한 감정: ")
                                     .bold()
-                                Text("😀")
+                                Text(analyzedSentiment)
                                     .font(.largeTitle)
                             }
                             .font(.title)
