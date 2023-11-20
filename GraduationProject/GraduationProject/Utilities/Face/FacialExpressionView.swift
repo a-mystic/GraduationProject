@@ -11,18 +11,20 @@ import ARKit
 import RealityKit
 
 final class FacialExpressionController: UIViewController {
-    @EnvironmentObject var emotionManager: FaceEmotionManager
-    
-    var setExpression: (String) -> ()
     private var arView = ARView(frame: .zero)
     
     @Binding var expression: String
     @Binding var expressionsOfRecognized: Set<String>
+    var setEmotion: (String) -> Void
     
-    init(expression: Binding<String>, expressionsOfRecognized: Binding<Set<String>>, _ setExpression: @escaping (String) -> Void) {
+    init(
+        expression: Binding<String>,
+        expressionsOfRecognized: Binding<Set<String>>,
+        setEmotion: @escaping (String) -> Void
+    ) {
         _expression = expression
         _expressionsOfRecognized = expressionsOfRecognized
-        self.setExpression = setExpression
+        self.setEmotion = setEmotion
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -101,7 +103,7 @@ extension FacialExpressionController: ARSessionDelegate, FaceAnchorDelegate {
     func update(expression: String) {
         self.expression = expression
         self.expressionsOfRecognized.insert(expression)
-        self.setExpression(expression)
+        setEmotion(expression)
     }
 }
 
@@ -112,8 +114,8 @@ struct FacialExpressionViewRefer: UIViewControllerRepresentable {
     @Binding var expressionsOfRecognized: Set<String>
 
     func makeUIViewController(context: Context) -> FacialExpressionController {
-        return FacialExpressionController(expression: $expression, expressionsOfRecognized: $expressionsOfRecognized) { string in
-            emotionManager.setEmotion(string)
+        return FacialExpressionController(expression: $expression, expressionsOfRecognized: $expressionsOfRecognized) { emotion in
+            emotionManager.setEmotion(emotion)
         }
     }
     

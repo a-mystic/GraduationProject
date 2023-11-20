@@ -12,7 +12,7 @@ struct HaruDiary: View {
     
     @State private var showDescription = false
     @State private var showRecommendedContent = false
-    @State private var loginIsNeed = false
+    @State private var loginIsNeed = true
     
     var body: some View {
         NavigationStack {
@@ -26,17 +26,16 @@ struct HaruDiary: View {
                         emotionManager.stopAnalyzing()
                     }
                 VStack(spacing: 30) {
-                    recordingStatus
                     inputField
                     analyze
-                    Spacer()
-                        .frame(width: 0, height: 40)
+                    recordingStatus
                 }
                 ProgressView()
                     .scaleEffect(2)
                     .opacity(isFetching ? 1 : 0)
                 FacialExpressionView()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 1, height: 1)
+                    .opacity(0)
             }
             .navigationDestination(isPresented: $showRecommendedContent) {
                 ContentRecommender(recommendedContent: recommendedContent, sentimentValue: sentimentValue)
@@ -81,9 +80,10 @@ struct HaruDiary: View {
     
     private var analyze: some View {
         Button("Analyze") {
-            Task {
-                await analyzeHaru()
-            }
+            print(emotionManager.faceEmotions)
+//            Task {
+//                await analyzeHaru()
+//            }
         }
         .buttonStyle(.borderedProminent)
     }
@@ -125,14 +125,15 @@ struct HaruDiary: View {
     
     private var recordingStatus: some View {
         HStack {
-            Image(systemName: "face.smiling.inverse")
             Text(currentStatus.rawValue)
+            Text(emotionManager.currentEmotion)
         }
-            .foregroundStyle(.secondary)
-            .font(.callout)
+        .foregroundStyle(currentStatus == .isRecording ? .mint : .secondary)
+        .font(.callout)
     }
 }
 
 #Preview {
     HaruDiary()
+        .environmentObject(FaceEmotionManager())
 }
