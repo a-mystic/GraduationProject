@@ -35,7 +35,7 @@ struct ContentRecommender: View {
                     finalEmotion
 //                        SheepAnimation(width: geometry.size.width, height: geometry.size.height/2.3)
                     recommendCard
-                        .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 0.45)
+                        .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
                 }
             }
             LottieView(jsonName: "congratulations", loopMode: .playOnce)
@@ -73,7 +73,7 @@ struct ContentRecommender: View {
                 .foregroundStyle(.white.opacity(0.9))
                 .padding()
                 .padding(.horizontal)
-                .background(.black.opacity(0.3))
+                .background(.black.opacity(0.7))
                 .clipShape(RoundedRectangle(cornerRadius: 14))
         }
     }

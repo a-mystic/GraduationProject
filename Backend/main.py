@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import requests
 import json
+# 실행코드
 # uvicorn main:app --reload
 
 # init
@@ -16,7 +17,7 @@ headers = {
 }
 
 @app.get("/recommend")
-async def recommend(inputText: str):
+async def recommend(inputText: str, faceEmotionValue: float):
     data = {"content" : inputText}
     response = requests.post(apiUrl, data=json.dumps(data), headers=headers).json()
     maxConfidence = max(response["document"]["confidence"], key=response["document"]["confidence"].get)
@@ -27,6 +28,8 @@ async def recommend(inputText: str):
     # 분석한 감정이 부정적이라면 감정수치에 마이너스를 곱해서 감정수치를 -1에서1 값으로 표현합니다.
     if str(response["document"]["sentiment"]) == "negative":
         normalizedConfidence *= -1
+    # 얼굴표정분석을 통한 감정수치까지 입력받고 가중치를 적용하여서 최종적으로 더하는부분
+    normalizedConfidence = 0.8 * normalizedConfidence + 0.2 * faceEmotionValue  
 
     # 여기에 -1에서1 값으로 표현된 감정수치를 조건에따라 0.5단위로 나누어서 추천할 콘텐츠들을 조사해주셔서 작성해주시면 될 것 같아요
     # 예를들어 코드는 아래와 같습니다

@@ -106,7 +106,7 @@ struct HaruDiary: View {
 
     private func analyzeHaru() async {
         isFetching = true
-        let url = "http://127.0.0.1:8000/recommend?inputText=\(inputs)"
+        let url = "http://127.0.0.1:8000/recommend?inputText=\(inputs)&faceEmotionValue=\(Double(0.2))"
         guard let encodingUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: encodingUrl) else { return }
         do {
