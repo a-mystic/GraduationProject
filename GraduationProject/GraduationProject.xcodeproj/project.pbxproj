@@ -20,6 +20,10 @@
 		4A34B0562AD63C2400B32F26 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A34B0552AD63C2400B32F26 /* Preview Assets.xcassets */; };
 		4A692C332AEC847200C58F35 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A692C322AEC847200C58F35 /* LoginView.swift */; };
 		4A692C352AEC86AF00C58F35 /* MoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A692C342AEC86AF00C58F35 /* MoreInfoView.swift */; };
+		4AA31E4E2B0AEE2E003FDF69 /* VideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E4D2B0AEE2E003FDF69 /* VideoManager.swift */; };
+		4AA31E502B0AEE57003FDF69 /* FaceAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E4F2B0AEE57003FDF69 /* FaceAnchor.swift */; };
+		4AA31E522B0AEF04003FDF69 /* FacialExpressionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E512B0AEF04003FDF69 /* FacialExpressionView.swift */; };
+		4AA31E542B0AEF46003FDF69 /* FaceEmotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E532B0AEF46003FDF69 /* FaceEmotionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		4A34B0552AD63C2400B32F26 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4A692C322AEC847200C58F35 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4A692C342AEC86AF00C58F35 /* MoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreInfoView.swift; sourceTree = "<group>"; };
+		4AA31E4D2B0AEE2E003FDF69 /* VideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoManager.swift; sourceTree = "<group>"; };
+		4AA31E4F2B0AEE57003FDF69 /* FaceAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceAnchor.swift; sourceTree = "<group>"; };
+		4AA31E512B0AEF04003FDF69 /* FacialExpressionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacialExpressionView.swift; sourceTree = "<group>"; };
+		4AA31E532B0AEF46003FDF69 /* FaceEmotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceEmotionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,7 @@
 		4A1762B22AEBB48600D14315 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				4AA31E532B0AEF46003FDF69 /* FaceEmotionManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -110,6 +119,9 @@
 		4AA31E4C2B0AEDD7003FDF69 /* Face */ = {
 			isa = PBXGroup;
 			children = (
+				4AA31E4D2B0AEE2E003FDF69 /* VideoManager.swift */,
+				4AA31E4F2B0AEE57003FDF69 /* FaceAnchor.swift */,
+				4AA31E512B0AEF04003FDF69 /* FacialExpressionView.swift */,
 			);
 			path = Face;
 			sourceTree = "<group>";
@@ -203,12 +215,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AA31E542B0AEF46003FDF69 /* FaceEmotionManager.swift in Sources */,
 				4A34B0512AD63C2200B32F26 /* HaruDiary.swift in Sources */,
 				4A692C332AEC847200C58F35 /* LoginView.swift in Sources */,
+				4AA31E4E2B0AEE2E003FDF69 /* VideoManager.swift in Sources */,
 				4A34B04F2AD63C2200B32F26 /* GraduationProjectApp.swift in Sources */,
 				4A1762B42AEBB4A700D14315 /* Description.swift in Sources */,
 				4A1762A72AEBAF9600D14315 /* LottieView.swift in Sources */,
 				4A1762BA2AEBBA5500D14315 /* SheepAnimation.swift in Sources */,
+				4AA31E522B0AEF04003FDF69 /* FacialExpressionView.swift in Sources */,
+				4AA31E502B0AEE57003FDF69 /* FaceAnchor.swift in Sources */,
 				4A1762B02AEBB17700D14315 /* ContentRecommender.swift in Sources */,
 				4A692C352AEC86AF00C58F35 /* MoreInfoView.swift in Sources */,
 			);
@@ -347,6 +363,7 @@
 				DEVELOPMENT_TEAM = 96B293Z3Y9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "얼굴표정을 분석하려면 카메라 기능이 필요합니다 사용해도 될까요?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -381,6 +398,7 @@
 				DEVELOPMENT_TEAM = 96B293Z3Y9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "얼굴표정을 분석하려면 카메라 기능이 필요합니다 사용해도 될까요?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

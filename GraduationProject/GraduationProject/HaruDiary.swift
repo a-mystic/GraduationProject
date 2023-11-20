@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct HaruDiary: View {
+    @EnvironmentObject var emotionManager: FaceEmotionManager
+    
     @State private var showDescription = false
     @State private var showRecommendedContent = false
-    
-    @State private var loginIsNeed = true
+    @State private var loginIsNeed = false
     
     var body: some View {
         NavigationStack {
@@ -22,6 +23,7 @@ struct HaruDiary: View {
                     .onTapGesture {
                         isFocused = false
                         currentStatus = .isNotRecording
+                        emotionManager.stopAnalyzing()
                     }
                 VStack(spacing: 30) {
                     recordingStatus
@@ -33,6 +35,8 @@ struct HaruDiary: View {
                 ProgressView()
                     .scaleEffect(2)
                     .opacity(isFetching ? 1 : 0)
+                FacialExpressionView()
+                    .frame(width: 100, height: 100)
             }
             .navigationDestination(isPresented: $showRecommendedContent) {
                 ContentRecommender(recommendedContent: recommendedContent, sentimentValue: sentimentValue)
@@ -71,6 +75,7 @@ struct HaruDiary: View {
             .focused($isFocused)
             .onTapGesture {
                 currentStatus = .isRecording
+                emotionManager.startAnalyzing()
             }
     }
     
@@ -103,11 +108,9 @@ struct HaruDiary: View {
             let responseData = try JSONDecoder().decode(BackendTestStruct.self, from: data)
             recommendedContent = responseData.recommend
             sentimentValue = responseData.sentimentValue
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-                showRecommendedContent = true
-                isFetching = false
-                currentStatus = .isNotRecording
-            }
+            showRecommendedContent = true
+            isFetching = false
+            currentStatus = .isNotRecording
         } catch {
             print(error)
         }

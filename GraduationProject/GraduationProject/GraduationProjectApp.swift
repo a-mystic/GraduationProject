@@ -21,6 +21,7 @@ struct GraduationProjectApp: App {
                 Text("설정뷰입니다.\n로그아웃을 하거나 개인정보처리방침을 보여주거나 사용자의 기록된 감정들을 초기화하거나 등의 기능을 생각중입니다...(개발중)")
                     .tabItem { Label("설정", systemImage: "gear") }
             }
+            .environmentObject(FaceEmotionManager())
         }
     }
 }
