@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct ContentRecommender: View {
-    let sentiment: String
-    let confidence: String
+    let recommendedContent: String
+    let sentimentValue: Double
+    
+    private var analyzedSentiment: String {
+        if sentimentValue <= 1 && sentimentValue > 0.5 {
+            return "매우긍정"
+        } else if sentimentValue 
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +27,7 @@ struct ContentRecommender: View {
                             .frame(width: 170, height: 170)
                         VStack {
                             HStack {
-                                Text("분석한 감정: \(sentiment)")
+                                Text("분석한 감정: \(analyzedSentiment)")
                                     .bold()
                                 Text("😀")
                                     .font(.largeTitle)
@@ -35,10 +41,6 @@ struct ContentRecommender: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundStyle(.blue.opacity(0.4))
                         }
-                        HStack {
-                            Text("분석한 감정 수치: ")
-                            Text("\(confidence)")
-                        }
                         .bold()
                         .font(.footnote)
                         .foregroundStyle(.gray)
@@ -51,5 +53,5 @@ struct ContentRecommender: View {
 }
 
 #Preview {
-    ContentRecommender(sentiment: "positive", confidence: "positive = 0.5, negative = 0.3, neutral = 0.2")
+    ContentRecommender(recommendedContent: "영화보기", sentimentValue: 0.7)
 }

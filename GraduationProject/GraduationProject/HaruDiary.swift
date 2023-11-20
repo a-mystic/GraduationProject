@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Home: View {
+struct HaruDiary: View {
     @State private var showDescription = false
     @State private var showRecommendedContent = false
     
@@ -35,7 +35,7 @@ struct Home: View {
                     .opacity(isFetching ? 1 : 0)
             }
             .navigationDestination(isPresented: $showRecommendedContent) {
-                ContentRecommender(sentiment: sentiment, confidence: confidence)
+                ContentRecommender(recommendedContent: recommendedContent, sentimentValue: sentimentValue)
             }
             .navigationTitle("Snooze")
             .navigationBarTitleDisplayMode(.inline)
@@ -84,12 +84,12 @@ struct Home: View {
     }
     
     struct BackendTestStruct: Codable {
-        var sentiment: String
-        var confidence: String
+        var recommend: String
+        var sentimentValue: Double
     }
-    
-    @State private var sentiment = ""
-    @State private var confidence = ""
+
+    @State private var recommendedContent = ""
+    @State private var sentimentValue: Double = 0
     @State private var isFetching = false
 
     private func analyzeHaru() async {
@@ -100,10 +100,9 @@ struct Home: View {
         print(url)
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let returnValue = try JSONDecoder().decode(BackendTestStruct.self, from: data)
-            sentiment = returnValue.sentiment
-            confidence = returnValue.confidence
-            print(sentiment, confidence)
+            let responseData = try JSONDecoder().decode(BackendTestStruct.self, from: data)
+            recommendedContent = responseData.recommend
+            sentimentValue = responseData.sentimentValue
             DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
                 showRecommendedContent = true
                 isFetching = false
@@ -132,5 +131,5 @@ struct Home: View {
 }
 
 #Preview {
-    Home()
+    HaruDiary()
 }

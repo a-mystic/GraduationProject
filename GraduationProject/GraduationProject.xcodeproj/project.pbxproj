@@ -15,7 +15,7 @@
 		4A1762B42AEBB4A700D14315 /* Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1762B32AEBB4A700D14315 /* Description.swift */; };
 		4A1762BA2AEBBA5500D14315 /* SheepAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1762B92AEBBA5500D14315 /* SheepAnimation.swift */; };
 		4A34B04F2AD63C2200B32F26 /* GraduationProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A34B04E2AD63C2200B32F26 /* GraduationProjectApp.swift */; };
-		4A34B0512AD63C2200B32F26 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A34B0502AD63C2200B32F26 /* Home.swift */; };
+		4A34B0512AD63C2200B32F26 /* HaruDiary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A34B0502AD63C2200B32F26 /* HaruDiary.swift */; };
 		4A34B0532AD63C2400B32F26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A34B0522AD63C2400B32F26 /* Assets.xcassets */; };
 		4A34B0562AD63C2400B32F26 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A34B0552AD63C2400B32F26 /* Preview Assets.xcassets */; };
 		4A692C332AEC847200C58F35 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A692C322AEC847200C58F35 /* LoginView.swift */; };
@@ -31,7 +31,7 @@
 		4A1762B92AEBBA5500D14315 /* SheepAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheepAnimation.swift; sourceTree = "<group>"; };
 		4A34B04B2AD63C2200B32F26 /* GraduationProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraduationProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A34B04E2AD63C2200B32F26 /* GraduationProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectApp.swift; sourceTree = "<group>"; };
-		4A34B0502AD63C2200B32F26 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		4A34B0502AD63C2200B32F26 /* HaruDiary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaruDiary.swift; sourceTree = "<group>"; };
 		4A34B0522AD63C2400B32F26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A34B0552AD63C2400B32F26 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4A692C322AEC847200C58F35 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -84,8 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				4A34B04E2AD63C2200B32F26 /* GraduationProjectApp.swift */,
-				4A34B0502AD63C2200B32F26 /* Home.swift */,
-				4A1762A62AEBAF9600D14315 /* LottieView.swift */,
+				4A34B0502AD63C2200B32F26 /* HaruDiary.swift */,
 				4A1762AF2AEBB17700D14315 /* ContentRecommender.swift */,
 				4A1762B32AEBB4A700D14315 /* Description.swift */,
 				4A1762B92AEBBA5500D14315 /* SheepAnimation.swift */,
@@ -111,6 +110,7 @@
 		4AA669B22AEBE723006DA0F8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4A1762A62AEBAF9600D14315 /* LottieView.swift */,
 				4A1762AC2AEBAFF700D14315 /* bear.json */,
 				4A1762AB2AEBAFF700D14315 /* congratulations.json */,
 			);
@@ -195,7 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A34B0512AD63C2200B32F26 /* Home.swift in Sources */,
+				4A34B0512AD63C2200B32F26 /* HaruDiary.swift in Sources */,
 				4A692C332AEC847200C58F35 /* LoginView.swift in Sources */,
 				4A34B04F2AD63C2200B32F26 /* GraduationProjectApp.swift in Sources */,
 				4A1762B42AEBB4A700D14315 /* Description.swift in Sources */,
