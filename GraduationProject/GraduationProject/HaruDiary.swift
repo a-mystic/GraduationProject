@@ -89,7 +89,6 @@ struct HaruDiary: View {
             }
         } label: {
             Text("Analyze")
-                .font(.title3)
                 .frame(maxWidth: .infinity)
         }
         .padding(.horizontal)

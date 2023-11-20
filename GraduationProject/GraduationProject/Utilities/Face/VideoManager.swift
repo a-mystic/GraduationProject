@@ -37,6 +37,7 @@ final class VideoManager: NSObject {
         guard let videoDevice = videoDevice, let videoInput = try? AVCaptureDeviceInput(device: videoDevice) else {
             return
         }
+        videoDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: 60)   // test if not use minFrameDuration
         captureSession.addInput(videoInput)
         captureSession.addOutput(videoOutput)
     }
