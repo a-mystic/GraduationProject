@@ -20,8 +20,8 @@ struct HaruDiary: View {
                 background
                 VStack(spacing: 30) {
                     inputField
-                    analyze
                     recordingStatus
+                    analyze
                 }
                 ProgressView()
                     .scaleEffect(2)
@@ -83,11 +83,16 @@ struct HaruDiary: View {
     }
     
     private var analyze: some View {
-        Button("Analyze") {
+        Button {
             Task {
                 await analyzeHaru()
             }
+        } label: {
+            Text("Analyze")
+                .font(.title3)
+                .frame(maxWidth: .infinity)
         }
+        .padding(.horizontal)
         .buttonStyle(.borderedProminent)
     }
     
