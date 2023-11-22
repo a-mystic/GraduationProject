@@ -73,7 +73,7 @@ struct HaruDiary: View {
             .textFieldStyle(.roundedBorder)
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled(true)
-            .frame(width: 300, height: 300)
+            .frame(width: 300, height: 250)
             .shadow(radius: 10)
             .focused($isFocused)
             .onTapGesture {
