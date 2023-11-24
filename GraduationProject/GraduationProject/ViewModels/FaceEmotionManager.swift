@@ -8,7 +8,14 @@
 import SwiftUI
 
 class FaceEmotionManager: ObservableObject {
-    @Published private(set) var faceEmotions: [String:Int] = ["😁" : 0, "🙂" : 0, "😡" : 0, "😠" : 0, "😛" : 0, "😮" : 0]
+    @Published private(set) var faceEmotions: [String:Int] = [
+        "😁" : 0,
+        "🙂" : 0,
+        "😡" : 0,
+        "😠" : 0,
+        "😛" : 0,
+        "😮" : 0
+    ]
     @Published private(set) var isAnalyzing = false
     @Published var currentEmotion = "😐"
     
