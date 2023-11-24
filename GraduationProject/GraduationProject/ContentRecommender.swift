@@ -36,6 +36,7 @@ struct ContentRecommender: View {
 //                        SheepAnimation(width: geometry.size.width, height: geometry.size.height/2.3)
                     recommendCard
                         .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
+                    testButton(in: geometry)
                 }
             }
             LottieView(jsonName: "congratulations", loopMode: .playOnce)
@@ -76,6 +77,15 @@ struct ContentRecommender: View {
                 .background(.black.opacity(0.7))
                 .clipShape(RoundedRectangle(cornerRadius: 14))
         }
+    }
+    
+    private func testButton(in geometry: GeometryProxy) -> some View {
+        Button {
+        } label: {
+            Text("영화 보러가기")
+                .frame(maxWidth: geometry.size.width * 0.8)
+        }
+        .buttonStyle(.borderedProminent)
     }
 }
 

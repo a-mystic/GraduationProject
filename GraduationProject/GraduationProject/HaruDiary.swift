@@ -114,9 +114,9 @@ struct HaruDiary: View {
             let responseData = try JSONDecoder().decode(BackendTestStruct.self, from: data)
             recommendedContent = responseData.recommend
             sentimentValue = responseData.sentimentValue
-            showRecommendedContent = true
             isFetching = false
             currentStatus = .isNotRecording
+            showRecommendedContent = true
         } catch {
             print(error)
         }
