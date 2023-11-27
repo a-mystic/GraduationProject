@@ -11,7 +11,7 @@ protocol FaceAnchorDelegate: AnyObject {
     func update(expression: String)
 }
 
-final class FaceAnchor: NSObject {  // sad emotion to mouthAndeyes
+final class FaceAnchor: NSObject {
     weak var delegate: FaceAnchorDelegate?
     
     private var expression = ""

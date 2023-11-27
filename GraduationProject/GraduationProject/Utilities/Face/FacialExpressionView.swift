@@ -15,6 +15,7 @@ final class FacialExpressionController: UIViewController {
     
     @Binding var expression: String
     @Binding var expressionsOfRecognized: Set<String>
+    
     var setEmotion: (String) -> Void
     
     init(

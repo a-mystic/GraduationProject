@@ -27,7 +27,7 @@ struct HaruDiary: View {
                     .scaleEffect(2)
                     .opacity(isFetching ? 1 : 0)
                 FacialExpressionView()
-                    .frame(width: 1, height: 1)
+                    .frame(width: 100, height: 100)
                     .opacity(0)
             }
             .navigationDestination(isPresented: $showRecommendedContent) {
