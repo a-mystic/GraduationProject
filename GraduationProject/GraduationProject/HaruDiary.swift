@@ -125,7 +125,7 @@ struct HaruDiary: View {
     @State private var currentStatus = RecordingStatus.isNotRecording
     
     private enum RecordingStatus: String {
-        case isRecording = "감정을 분석하고 있습니다."
+        case isRecording = "감정을 분석하는중 입니다."
         case isNotRecording = "감정을 분석하고 있지 않습니다."
     }
     
@@ -133,8 +133,9 @@ struct HaruDiary: View {
         HStack {
             Text(currentStatus.rawValue)
             Text(emotionManager.currentEmotion)
+                .font(.largeTitle)
         }
-        .foregroundStyle(currentStatus == .isRecording ? .mint : .secondary)
+        .foregroundStyle(emotionManager.currentColor)
         .font(.callout)
     }
 }

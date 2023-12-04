@@ -19,6 +19,19 @@ class FaceEmotionManager: ObservableObject {
     @Published private(set) var isAnalyzing = false
     @Published var currentEmotion = "😐"
     
+    var currentColor: Color {
+        switch currentEmotion {
+        case "😁", "🙂": 
+            return .orange
+        case "😡", "😠":
+            return .red
+        case "😛", "😮":
+            return .blue
+        default:
+            return .mint
+        }
+    }
+    
     func setEmotion(_ emotion: String) {
         if isAnalyzing {
             currentEmotion = emotion
