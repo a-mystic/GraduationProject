@@ -26,8 +26,6 @@ struct ContentRecommender: View {
         return "😐"
     }
     
-    @State private var congratulationVisible: Double = 1
-    
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -41,13 +39,6 @@ struct ContentRecommender: View {
                         testButton(in: geometry)
                     }
                 }
-                LottieView(jsonName: "congratulations", loopMode: .playOnce)
-                    .opacity(congratulationVisible)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            congratulationVisible = 0
-                        }
-                    }
             }
         }
     }
@@ -85,6 +76,9 @@ struct ContentRecommender: View {
                 .padding(.horizontal)
                 .background(.black.opacity(0.7))
                 .clipShape(RoundedRectangle(cornerRadius: 14))
+        }
+        .overlay {
+            LottieView(jsonName: "congratulations", loopMode: .playOnce)
         }
     }
     
