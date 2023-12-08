@@ -1,5 +1,6 @@
 # 학교 졸업작품
 
-데모영상 version 2
+산학프로젝트 최종발표 영상
 
-https://github.com/a-mystic/GraduationProject/assets/57480798/3b25c360-7ba6-4a70-a661-42eb65c67355
+https://github.com/a-mystic/GraduationProject/assets/57480798/113ea9eb-4867-4c51-a8b3-68764060dab5
+
