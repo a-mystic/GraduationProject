@@ -26,20 +26,29 @@ struct ContentRecommender: View {
         return "😐"
     }
     
+    @State private var congratulationVisible: Double = 1
+    
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                VStack(spacing: 20) {
-                    LottieView(jsonName: "bear", loopMode: .repeat(3))
-                        .frame(width: 170, height: 170)
-                    finalEmotion
-//                        SheepAnimation(width: geometry.size.width, height: geometry.size.height/2.3)
-                    recommendCard
-                        .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
-                    testButton(in: geometry)
+            ScrollView {
+                ZStack {
+                    VStack(spacing: 20) {
+                        LottieView(jsonName: "bear", loopMode: .repeat(3))
+                            .frame(width: 170, height: 170)
+                        finalEmotion
+                        recommendCard
+                            .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
+                        testButton(in: geometry)
+                    }
                 }
+                LottieView(jsonName: "congratulations", loopMode: .playOnce)
+                    .opacity(congratulationVisible)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            congratulationVisible = 0
+                        }
+                    }
             }
-            LottieView(jsonName: "congratulations", loopMode: .playOnce)
         }
     }
     
@@ -79,13 +88,20 @@ struct ContentRecommender: View {
         }
     }
     
+    @State private var showWebsite = false
+    
     private func testButton(in geometry: GeometryProxy) -> some View {
         Button {
+            showWebsite = true
+            print("tap")
         } label: {
             Text("영화 보러가기")
                 .frame(maxWidth: geometry.size.width * 0.8)
         }
         .buttonStyle(.borderedProminent)
+        .sheet(isPresented: $showWebsite) {
+            SafariView(url: URL(string: "https://www.imdb.com/")!)
+        }
     }
 }
 

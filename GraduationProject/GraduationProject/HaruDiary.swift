@@ -84,8 +84,14 @@ struct HaruDiary: View {
     
     private var analyze: some View {
         Button {
-            Task {
-                await analyzeHaru()
+//            Task {
+//                await analyzeHaru()
+//            }
+            // test
+            isFetching = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                isFetching = false
+                showRecommendedContent = true
             }
         } label: {
             Text("Analyze")
