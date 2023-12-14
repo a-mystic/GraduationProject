@@ -87,7 +87,6 @@ struct ContentRecommender: View {
     private func testButton(in geometry: GeometryProxy) -> some View {
         Button {
             showWebsite = true
-            print("tap")
         } label: {
             Text("영화 보러가기")
                 .frame(maxWidth: geometry.size.width * 0.8)

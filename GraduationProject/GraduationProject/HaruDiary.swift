@@ -101,9 +101,10 @@ struct HaruDiary: View {
         .buttonStyle(.borderedProminent)
     }
     
-    struct BackendTestStruct: Codable {
+    struct ContentsData: Codable {
         var recommend: String
         var sentimentValue: Double
+        var category: String
     }
 
     @State private var recommendedContent = ""
@@ -117,7 +118,7 @@ struct HaruDiary: View {
               let url = URL(string: encodingUrl) else { return }
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let responseData = try JSONDecoder().decode(BackendTestStruct.self, from: data)
+            let responseData = try JSONDecoder().decode(ContentsData.self, from: data)
             recommendedContent = responseData.recommend
             sentimentValue = responseData.sentimentValue
             isFetching = false
