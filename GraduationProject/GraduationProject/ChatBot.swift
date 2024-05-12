@@ -10,6 +10,20 @@ import SwiftUI
 struct ChatBot: View {
     @State private var messageDatas = [Chat]()
     
+    private var testEmotionDatas: [String:Double] = [
+        "2024-04-08" : 0.6,
+        "2024-04-09" : 0.6,
+        "2024-04-10" : 0.2,
+    ]
+    
+    private var isLocked: Bool {
+        if testEmotionDatas.values.mean() >= 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -32,6 +46,11 @@ struct ChatBot: View {
                         ProgressView()
                             .scaleEffect(1.5)
                             .tint(.gray)
+                    }
+                    if isLocked {
+                        Image(systemName: "lock.fill")
+                            .scaleEffect(4)
+                            .foregroundStyle(.black)
                     }
                 }
                 sendBar
@@ -64,12 +83,21 @@ struct ChatBot: View {
     
     @State private var enteredText = ""
     
+    private var placeHolderMessage: String {
+        if isLocked {
+            return "현재 감정에서는 사용이 불가능합니다."
+        } else {
+            return "Message"
+        }
+    }
+    
     private var sendBar: some View {
         HStack {
-            TextField("Message", text: $enteredText, axis: .vertical)
+            TextField(placeHolderMessage, text: $enteredText, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
+                .disabled(isLocked)
             send
         }
         .padding(.horizontal)
@@ -82,9 +110,11 @@ struct ChatBot: View {
             let text = enteredText
             enteredText = ""
             withAnimation {
-                messageDatas.append(Chat(message: text, isSender: true))
-                Task(priority: .background) {
-                    await fetchAnswer(message: text)
+                if text != "" {
+                    messageDatas.append(Chat(message: text, isSender: true))
+                    Task(priority: .background) {
+                        await fetchAnswer(message: text)
+                    }
                 }
             }
         } label: {

@@ -19,3 +19,12 @@ struct SafariView: UIViewControllerRepresentable {
         
     }
 }
+
+extension Dictionary.Values where Element == Double {
+    func mean() -> Double {
+        let sum = self.reduce(0) { lhs, rhs in
+            return lhs + rhs
+        }
+        return sum / Double(self.count)
+    }
+}

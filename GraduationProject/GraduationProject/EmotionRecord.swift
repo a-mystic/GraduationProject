@@ -6,35 +6,31 @@
 //
 
 import SwiftUI
+import Charts
 
 struct EmotionRecord: View {
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
-                emotionDiagnosis(in: geometry.size)
-                calendar
+            ScrollView {
+                VStack(spacing: 0) {
+                    emotionDiagnosis(in: geometry.size)
+                    emotionChart(in: geometry.size)
+                    calendar
+                }
             }
         }
     }
     
     private var diagnosedEmotion: String {
-        var sum: Double = 0
-        testEmotionDatas.values.forEach { value in
-            sum += value
-        }
-        return emotionValueToEmotion(sum/Double(testEmotionDatas.count))
+        emotionValueToEmotion(testEmotionDatas.values.mean())
     }
     
     private var diagnosisMessage: String {
-        var sum: Double = 0
-        testEmotionDatas.values.forEach { value in
-            sum += value
-        }
-        let mean = sum/Double(testEmotionDatas.count)
+        let mean = testEmotionDatas.values.mean()
         if mean > 0 {
-            return "이번주 느끼신 감정은 행복입니다"
+            return "최근 일주일간 느끼신 감정은 행복입니다"
         } else {
-            return "이번주 느끼신 감정은 불행입니다\n심리상담 챗봇을 이용해보아요"
+            return "최근 일주일간 느끼신 감정은 불행입니다\n심리상담 챗봇을 이용해보아요"
         }
     }
     
@@ -42,7 +38,7 @@ struct EmotionRecord: View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundStyle(.gray.opacity(0.6))
-                .frame(width: .infinity, height: size.height * 0.3)
+                .frame(width: size.width * 0.9, height: size.height * 0.3)
             VStack(spacing: 10) {
                 Text(diagnosedEmotion).font(.system(size: 70))
                 Text(diagnosisMessage)
@@ -50,6 +46,36 @@ struct EmotionRecord: View {
                     .background(Color.white, in: RoundedRectangle(cornerRadius: 6))
             }
         }
+        .padding()
+    }
+    
+    private var weekPercent: Double {
+        let absSum = testEmotionDatas.values.reduce(0) { lhs, rhs in
+            abs(lhs) + abs(rhs)
+        }
+        let sum = testEmotionDatas.values.reduce(0) { lhs, rhs in
+            lhs + rhs
+        }
+        return (absSum - sum) / absSum  
+    }
+    
+    private func emotionChart(in size: CGSize) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundStyle(.brown.opacity(0.5))
+            Circle()
+                .stroke(lineWidth: 15)
+                .foregroundStyle(.gray)
+                .padding()
+            Circle()
+                .trim(from: 0, to: 0.9)
+                .stroke(lineWidth: 16)
+                .rotation(Angle(degrees: -90))
+                .foregroundStyle(.black)
+                .padding()
+            Text("90%")
+        }
+        .frame(width: size.width * 0.9, height: size.height * 0.4)
         .padding()
     }
     
@@ -61,20 +87,10 @@ struct EmotionRecord: View {
             DatePicker("이 주의 감정들", selection: $selectedDate, displayedComponents: .date)
                 .datePickerStyle(GraphicalDatePickerStyle())
                 .onChange(of: selectedDate) { value in
-                    let date = dateToString(selectedDate: value)
-                    if let value = testEmotionDatas[date] {
-                        selectedEmotion = emotionValueToEmotion(value)
-                    } else {
-                        selectedEmotion = "기록이 없습니다"
-                    }
+                    makeCalendarData(value)
                 }
                 .onAppear {
-                    let date = dateToString(selectedDate: Date())
-                    if let value = testEmotionDatas[date] {
-                        selectedEmotion = emotionValueToEmotion(value)
-                    } else {
-                        selectedEmotion = "기록이 없습니다"
-                    }
+                    makeCalendarData(Date())
                 }
                 .background(.gray.opacity(0.2), in: RoundedRectangle(cornerRadius: 12))
                 .padding()
@@ -82,10 +98,20 @@ struct EmotionRecord: View {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundStyle(.black.opacity(0.8))
                 Text("\(dateToString(selectedDate: selectedDate))일의 감정: \(selectedEmotion)")
+                    .padding()
                     .font(.body)
                     .foregroundStyle(.white)
             }
             .padding()
+        }
+    }
+    
+    private func makeCalendarData(_ date: Date) {
+        let date = dateToString(selectedDate: date)
+        if let value = testEmotionDatas[date] {
+            selectedEmotion = emotionValueToEmotion(value)
+        } else {
+            selectedEmotion = "기록이 없습니다"
         }
     }
     
@@ -96,9 +122,13 @@ struct EmotionRecord: View {
     }
     
     private var testEmotionDatas: [String:Double] = [
-        "2024-04-08" : -0.6,
-        "2024-04-09" : -0.6,
-        "2024-04-10" : 0.2,
+        "2024-05-01" : -0.1,
+        "2024-05-02" : -0.2,
+        "2024-05-03" : 0.3,
+        "2024-05-04" : 0.4,
+        "2024-05-05" : -0.5,
+        "2024-05-06" : -0.2,
+        "2024-05-07" : -0.66,
     ]
     
     private func emotionValueToEmotion(_ value: Double) -> String {

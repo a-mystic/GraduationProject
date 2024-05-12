@@ -14,7 +14,7 @@ struct HaruDiary: View {
     @State private var showRecommendedContent = false
     @State private var loginIsNeed = false
 //    @AppStorage("userInputIsNeed") private var userInfoIsNeed = true
-    @State private var userInfoIsNeed = false
+    @State private var userInfoIsNeed = true
     
     private var locationManager = LocationManager.manager
     
@@ -78,11 +78,14 @@ struct HaruDiary: View {
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
             .padding()
-            .background(.white, in: RoundedRectangle(cornerRadius: 12))
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundStyle(.white)
+                    .shadow(radius: 7)
+            }
             .tint(.black)
             .foregroundStyle(.black)
             .padding()
-            .shadow(radius: 10)
             .focused($isFocused)
     }
     
@@ -121,7 +124,7 @@ struct HaruDiary: View {
 //            let responseData = try JSONDecoder().decode(SentimentData.self, from: data)
 //            contentsManager.setSentimentValue(to: responseData.sentimentValue)
             // test
-            contentsManager.setSentimentValue(to: -0.15)
+            contentsManager.setSentimentValue(to: 0.51)
             isFetching = false
             showAskView = true
         } catch {
