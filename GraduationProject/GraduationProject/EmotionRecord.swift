@@ -50,30 +50,54 @@ struct EmotionRecord: View {
     }
     
     private var weekPercent: Double {
+        let negatives = testEmotionDatas.values.filter { value in
+            value < 0
+        }
+        let negativeSum = negatives.reduce(0) { lhs, rhs in
+            abs(lhs) + abs(rhs)
+        }
         let absSum = testEmotionDatas.values.reduce(0) { lhs, rhs in
             abs(lhs) + abs(rhs)
         }
-        let sum = testEmotionDatas.values.reduce(0) { lhs, rhs in
-            lhs + rhs
-        }
-        return (absSum - sum) / absSum  
+        return negativeSum / absSum
     }
     
     private func emotionChart(in size: CGSize) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundStyle(.brown.opacity(0.5))
-            Circle()
-                .stroke(lineWidth: 15)
-                .foregroundStyle(.gray)
-                .padding()
-            Circle()
-                .trim(from: 0, to: 0.9)
-                .stroke(lineWidth: 16)
-                .rotation(Angle(degrees: -90))
-                .foregroundStyle(.black)
-                .padding()
-            Text("90%")
+            VStack {
+                ZStack {
+                    Circle()
+                        .stroke(lineWidth: 15)
+                        .foregroundStyle(.white)
+                        .padding()
+                    Circle()
+                        .trim(from: 0, to: weekPercent)
+                        .stroke(lineWidth: 16)
+                        .rotation(Angle(degrees: -90))
+                        .foregroundStyle(.black)
+                        .padding()
+                    Text("\(String(format: "%.2f", weekPercent*100))%")
+                }
+                HStack {
+                    Circle()
+                        .foregroundStyle(.white)
+                        .frame(width: 15, height: 15)
+                    Text("긍정수치")
+                        .foregroundStyle(.white)
+                    Spacer()
+                }
+                HStack {
+                    Circle()
+                        .foregroundStyle(.black)
+                        .frame(width: 15, height: 15)
+                    Text("부정수치")
+                        .foregroundStyle(.white)
+                    Spacer()
+                }
+            }
+            .padding()
         }
         .frame(width: size.width * 0.9, height: size.height * 0.4)
         .padding()
