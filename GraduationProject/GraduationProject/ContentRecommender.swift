@@ -168,7 +168,9 @@ struct ContentRecommender: View {
     
     @AppStorage("selectedPositiveCategoriesAppStorage") var selectedPositiveCategoriesAppStorage = Data()
     @AppStorage("selectedNegativeCategoriesAppStorage") var selectedNegativeCategoriesAppStorage = Data()
-    
+    @AppStorage("selectedPositiveDetailsAppStorage") var selectedPositiveDetailsAppStorage = Data()
+    @AppStorage("selectedNegativeDetailsAppStorage") var selectedNegativeDetailsAppStorage = Data()
+
     private var selectedPositiveCategories: [String] {
         if let data = try? JSONDecoder().decode([String].self, from: selectedPositiveCategoriesAppStorage) {
             return data
@@ -181,6 +183,20 @@ struct ContentRecommender: View {
             return data
         }
         return []
+    }
+    
+    private var selectedPositiveDetails: [String:[String]] {
+        if let data = try? JSONDecoder().decode([String:[String]].self, from: selectedPositiveDetailsAppStorage) {
+            return data
+        }
+        return [:]
+    }
+    
+    private var selectedNegativeDetails: [String:[String]] {
+        if let data = try? JSONDecoder().decode([String:[String]].self, from: selectedNegativeDetailsAppStorage) {
+            return data
+        }
+        return [:]
     }
     
     private let contentsCategories: [String:[String]] = [
@@ -201,16 +217,16 @@ struct ContentRecommender: View {
         Button {
             if contentsManager.sentimentValue > 0 {
                 if let selectedCategory = selectedPositiveCategories.randomElement(),
-                   let detailCategory = contentsCategories[selectedCategory]?.randomElement(),
-                   let content = CategoryDetails[detailCategory]?.randomElement() {
-                    contentsManager.setRecommendCategory(to: detailCategory)  // 영화, 유튜브, 음악, 책, 산책, 운동, 쇼핑
+                   let recommendCategory = contentsCategories[selectedCategory]?.randomElement(),
+                   let content = selectedPositiveDetails[selectedCategory]?.randomElement() {
+                    contentsManager.setRecommendCategory(to: recommendCategory)
                     contentsManager.setRecommendContent(to: content)    // 발라드, 추리소설
                 }
             } else {
                 if let selectedCategory = selectedNegativeCategories.randomElement(),
-                   let detailCategory = contentsCategories[selectedCategory]?.randomElement(),
-                   let content = CategoryDetails[detailCategory]?.randomElement() {
-                    contentsManager.setRecommendCategory(to: detailCategory)
+                   let recommendCategory = contentsCategories[selectedCategory]?.randomElement(),
+                   let content = selectedNegativeDetails[selectedCategory]?.randomElement() {
+                    contentsManager.setRecommendCategory(to: recommendCategory)
                     contentsManager.setRecommendContent(to: content)
                 }
             }
