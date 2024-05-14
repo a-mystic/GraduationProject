@@ -25,7 +25,7 @@ class ContentsManager: ObservableObject {
         sentimentValue = value
     }
     
-    func setNeedHate() {
-        needHate = true
+    func setNeedHate(to: Bool) {
+        needHate = to
     }
 }

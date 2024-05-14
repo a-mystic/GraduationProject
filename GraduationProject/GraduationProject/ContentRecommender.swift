@@ -220,7 +220,7 @@ struct ContentRecommender: View {
                    let recommendCategory = contentsCategories[selectedCategory]?.randomElement(),
                    let content = selectedPositiveDetails[selectedCategory]?.randomElement() {
                     contentsManager.setRecommendCategory(to: recommendCategory)
-                    contentsManager.setRecommendContent(to: content)    // 발라드, 추리소설
+                    contentsManager.setRecommendContent(to: content)
                 }
             } else {
                 if let selectedCategory = selectedNegativeCategories.randomElement(),
@@ -230,6 +230,7 @@ struct ContentRecommender: View {
                     contentsManager.setRecommendContent(to: content)
                 }
             }
+            contentsManager.setNeedHate(to: false)
         } label: {
             Text("마음에 안들어요")
                 .padding(.vertical, 9)

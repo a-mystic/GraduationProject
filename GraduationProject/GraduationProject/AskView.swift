@@ -288,7 +288,7 @@ struct AskView: View {
                         contentsManager.setRecommendContent(to: content)
                     }
                 } else {
-                    contentsManager.setNeedHate()
+                    contentsManager.setNeedHate(to: true)
                 }
             } else if value <= 0 {
                 if selectedNegativeCategories.contains(mainCategory) {
@@ -296,7 +296,7 @@ struct AskView: View {
                         contentsManager.setRecommendContent(to: content)
                     }
                 } else {
-                    contentsManager.setNeedHate()
+                    contentsManager.setNeedHate(to: true)
                 }
             }
         }
