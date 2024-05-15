@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 import requests
 import json
-from openai import OpenAI
 import pymongo
 import google.generativeai as genai
 
