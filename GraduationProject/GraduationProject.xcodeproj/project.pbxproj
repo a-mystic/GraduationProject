@@ -28,8 +28,8 @@
 		4AA31E502B0AEE57003FDF69 /* FaceAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E4F2B0AEE57003FDF69 /* FaceAnchor.swift */; };
 		4AA31E522B0AEF04003FDF69 /* FacialExpressionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E512B0AEF04003FDF69 /* FacialExpressionView.swift */; };
 		4AA31E542B0AEF46003FDF69 /* FaceEmotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E532B0AEF46003FDF69 /* FaceEmotionManager.swift */; };
+		4AA6A0BA2BF95B670029C528 /* SnoozeModel.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6A0B92BF95B670029C528 /* SnoozeModel.mlpackage */; };
 		4AC798922BC3BDE100FB25F1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC798912BC3BDE100FB25F1 /* UserInfo.swift */; };
-		4AEF71B72BE4926900B36FEB /* SnoozeModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF71B62BE4926900B36FEB /* SnoozeModel.mlmodel */; };
 		4AF82E5F2BA1D3B900DCCA1B /* AskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF82E5E2BA1D3B900DCCA1B /* AskView.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +55,8 @@
 		4AA31E4F2B0AEE57003FDF69 /* FaceAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceAnchor.swift; sourceTree = "<group>"; };
 		4AA31E512B0AEF04003FDF69 /* FacialExpressionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacialExpressionView.swift; sourceTree = "<group>"; };
 		4AA31E532B0AEF46003FDF69 /* FaceEmotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceEmotionManager.swift; sourceTree = "<group>"; };
+		4AA6A0B92BF95B670029C528 /* SnoozeModel.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = SnoozeModel.mlpackage; path = ../../Backend/SnoozeModel.mlpackage; sourceTree = "<group>"; };
 		4AC798912BC3BDE100FB25F1 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
-		4AEF71B62BE4926900B36FEB /* SnoozeModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SnoozeModel.mlmodel; sourceTree = "<group>"; };
 		4AF82E5E2BA1D3B900DCCA1B /* AskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,7 +117,7 @@
 				4A34B0522AD63C2400B32F26 /* Assets.xcassets */,
 				4A7D886F2BC548E3009F13D7 /* EmotionRecord.swift */,
 				4A7D88712BC55287009F13D7 /* ChatBot.swift */,
-				4AEF71B62BE4926900B36FEB /* SnoozeModel.mlmodel */,
+				4AA6A0B92BF95B670029C528 /* SnoozeModel.mlpackage */,
 				4A1762B22AEBB48600D14315 /* ViewModels */,
 				4A1762B12AEBB48000D14315 /* Models */,
 				4AA669B22AEBE723006DA0F8 /* Utilities */,
@@ -239,7 +239,6 @@
 				4AA31E542B0AEF46003FDF69 /* FaceEmotionManager.swift in Sources */,
 				4A34B0512AD63C2200B32F26 /* HaruDiary.swift in Sources */,
 				4A70712B2B230D06002A4E79 /* Utilities.swift in Sources */,
-				4AEF71B72BE4926900B36FEB /* SnoozeModel.mlmodel in Sources */,
 				4A34B04F2AD63C2200B32F26 /* GraduationProjectApp.swift in Sources */,
 				4A7D88742BC557B6009F13D7 /* Chat.swift in Sources */,
 				4A7D88722BC55287009F13D7 /* ChatBot.swift in Sources */,
@@ -255,6 +254,7 @@
 				4A1762B02AEBB17700D14315 /* ContentRecommender.swift in Sources */,
 				4A6FD9392BEB074D00770F87 /* LocationManager.swift in Sources */,
 				4AF82E5F2BA1D3B900DCCA1B /* AskView.swift in Sources */,
+				4AA6A0BA2BF95B670029C528 /* SnoozeModel.mlpackage in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

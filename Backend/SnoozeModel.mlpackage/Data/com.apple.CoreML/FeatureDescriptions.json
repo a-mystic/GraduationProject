@@ -1,12 +1,12 @@
 {
   "Outputs" : {
     "Content" : {
-      "MLFeatureShortDescription" : ""
+      "MLFeatureShortDescription" : "--"
     }
   },
   "Inputs" : {
     "Emotion value" : {
-      "MLFeatureShortDescription" : ""
+      "MLFeatureShortDescription" : "--"
     }
   },
   "TrainingInputs" : {
