@@ -1,5 +1,5 @@
 # 졸업작품
 
-https://github.com/a-mystic/GraduationProject/assets/57480798/8fa42e1a-cbe0-42c1-bcc5-e7ef2cef826b
+https://github.com/a-mystic/GraduationProject/assets/57480798/7fed3990-c78c-4d20-97b4-977b7bce2d0c
 
 시연 영상
