@@ -9,6 +9,7 @@ import SwiftUI
 import CoreML
 import CoreLocation
 
+// test
 struct HaruDiary: View {
     @State private var showDescription = false
     @State private var showRecommendedContent = false
