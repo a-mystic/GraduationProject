@@ -8,21 +8,27 @@
 import SwiftUI
 
 struct ChatBot: View {
+    @Binding var serverState: ServerState
+    
+    init(serverState: Binding<ServerState>) {
+        _serverState = serverState
+    }
+    
     @State private var messageDatas = [Chat]()
     
-    private var testEmotionDatas: [String:Double] = [
-        "2024-04-08" : 0.6,
-        "2024-04-09" : 0.6,
-        "2024-04-10" : 0.2,
-    ]
-    
-    private var isLocked: Bool {
-        if testEmotionDatas.values.mean() >= 0 {
-            return true
-        } else {
-            return false
-        }
-    }
+//    private var testEmotionDatas: [String:Double] = [
+//        "2024-04-08" : 0.6,
+//        "2024-04-09" : 0.6,
+//        "2024-04-10" : 0.2,
+//    ]
+//    
+//    private var isLocked: Bool {
+//        if testEmotionDatas.values.mean() >= 0 {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
     
     var body: some View {
         NavigationStack {
@@ -47,13 +53,16 @@ struct ChatBot: View {
                             .scaleEffect(1.5)
                             .tint(.gray)
                     }
-                    if isLocked {
+                    if serverState == .bad {
                         Image(systemName: "lock.fill")
-                            .scaleEffect(4)
+                            .scaleEffect(3)
                             .foregroundStyle(.black)
                     }
                 }
                 sendBar
+            }
+            .onTapGesture {
+                isFocused = false
             }
             .navigationTitle("심리상담")
             .navigationBarTitleDisplayMode(.inline)
@@ -84,20 +93,23 @@ struct ChatBot: View {
     @State private var enteredText = ""
     
     private var placeHolderMessage: String {
-        if isLocked {
-            return "현재 감정에서는 사용이 불가능합니다."
+        if serverState == .bad {
+            return "현재 상태에서는 사용이 불가능해요"
         } else {
-            return "Message"
+            return "메세지를 입력해 주세요"
         }
     }
+    
+    @FocusState private var isFocused
     
     private var sendBar: some View {
         HStack {
             TextField(placeHolderMessage, text: $enteredText, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
+                .focused($isFocused)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
-                .disabled(isLocked)
+                .disabled(serverState == .bad)
             send
         }
         .padding(.horizontal)
@@ -121,6 +133,7 @@ struct ChatBot: View {
             Image(systemName: "paperplane.fill")
         }
         .buttonStyle(.borderedProminent)
+        .disabled(serverState == .bad)
     }
     
     struct ResponseMessage: Codable {
@@ -128,7 +141,7 @@ struct ChatBot: View {
     }
     
     private func fetchAnswer(message: String) async {
-        let url = ServerUrls.chat + "/chat?message=\(message)"
+        let url = ServerUrls.chat + "?message=\(message)"
         guard let encodingUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: encodingUrl) else { return }
         do {
@@ -138,11 +151,11 @@ struct ChatBot: View {
             isFetching = false
             messageDatas.append(Chat(message: responseMessage.message, isSender: false))
         } catch {
-            print(error)
+            serverState = .bad
         }
     }
 }
 
 #Preview {
-    ChatBot()
+    ChatBot(serverState: .constant(.bad))
 }

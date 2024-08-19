@@ -8,8 +8,9 @@
 import Foundation
 
 struct ServerUrls {
-    static let sentimentValue = "http://127.0.0.1:8000"
-    static let chat = "http://127.0.0.1:8000"
+    static let sentimentValue = "http://127.0.0.1:8000/sentimentValue"
+    static let chat = "http://127.0.0.1:8000/chat"
+    static let check = "http://127.0.0.1:8000/check"
 }
 
 struct ContentUrls {

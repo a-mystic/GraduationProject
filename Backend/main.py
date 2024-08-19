@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import pymongo.errors
 import requests
 import json
 import pymongo
@@ -46,15 +47,16 @@ pipeline = [
 # 호출방식: [localhost주소]/sentimentValue?inputText="text"
 @app.get("/sentimentValue")
 async def calcSentimentValue(inputText: str):
-    data = {"content" : inputText}
-    response = requests.post(naverApiUrl, data=json.dumps(data), headers=headers).json()
-    maxConfidence = max(response["document"]["confidence"], key=response["document"]["confidence"].get)
-    # 분석한 감정에 나타난 수치를 0에서1 값으로 표현하기위해 100으로 나누는 코드입니다.
-    normalizedConfidence = response["document"]["confidence"][maxConfidence] / 100
-    # 분석한 감정이 부정적이라면 감정수치에 마이너스를 곱해서 감정수치를 -1에서1 값으로 표현합니다.
-    if str(response["document"]["sentiment"]) == "negative":
-        normalizedConfidence *= -1 
-    return {"sentimentValue" : normalizedConfidence}
+    # data = {"content" : inputText}
+    # response = requests.post(naverApiUrl, data=json.dumps(data), headers=headers).json()
+    # maxConfidence = max(response["document"]["confidence"], key=response["document"]["confidence"].get)
+    # # 분석한 감정에 나타난 수치를 0에서1 값으로 표현하기위해 100으로 나누는 코드입니다.
+    # normalizedConfidence = response["document"]["confidence"][maxConfidence] / 100
+    # # 분석한 감정이 부정적이라면 감정수치에 마이너스를 곱해서 감정수치를 -1에서1 값으로 표현합니다.
+    # if str(response["document"]["sentiment"]) == "negative":
+    #     normalizedConfidence *= -1 
+    # return {"sentimentValue" : normalizedConfidence}
+
     #test
     return {"sentimentValue" : 0.7}
 
@@ -77,3 +79,11 @@ async def chat(message: str):
     response = chat.send_message(message)
     insertMessageToMongodb(message= response.text, role= "model")
     return {"message": response.text}
+
+@app.get("/check")
+async def check():
+    try:
+        mongodbClient.admin.command("ping")
+        return True
+    except pymongo.errors.ConnectionFailure:
+        return False

@@ -20,6 +20,19 @@ struct SafariView: UIViewControllerRepresentable {
     }
 }
 
+enum ServerState {
+    case good
+    case bad
+}
+
+var currentDate: String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+
+    let currentDate = Date()
+    return dateFormatter.string(from: currentDate)
+}
+
 extension Dictionary.Values where Element == Double {
     func mean() -> Double {
         let sum = self.reduce(0) { lhs, rhs in
