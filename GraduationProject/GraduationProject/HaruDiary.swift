@@ -99,7 +99,7 @@ struct HaruDiary: View {
             VStack(spacing: 30) {
                 Image(systemName: "wifi.slash")
                     .font(.system(size: 75))
-                Text("서버와의 연결상태가 원활하지 않아요.")
+                Text("서버와 연결상태가 원활하지 않아요.")
                     .bold()
             }
         }
