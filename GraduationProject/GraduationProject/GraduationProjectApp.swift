@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct GraduationProjectApp: App {
     @StateObject private var contentsManager = ContentsManager()
-    @State private var serverState: ServerState = .good
+    @State private var serverState: ServerState = .loading  
     
     var body: some Scene {
         WindowGroup {

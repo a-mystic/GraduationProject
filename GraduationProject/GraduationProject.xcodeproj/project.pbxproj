@@ -29,7 +29,7 @@
 		4AA31E522B0AEF04003FDF69 /* FacialExpressionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E512B0AEF04003FDF69 /* FacialExpressionView.swift */; };
 		4AA31E542B0AEF46003FDF69 /* FaceEmotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA31E532B0AEF46003FDF69 /* FaceEmotionManager.swift */; };
 		4AC6D1B72BFB5F6A00A9B9C0 /* SnoozeModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6D1B62BFB5F6A00A9B9C0 /* SnoozeModel.mlmodel */; };
-		4AC798922BC3BDE100FB25F1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC798912BC3BDE100FB25F1 /* UserInfo.swift */; };
+		4AC798922BC3BDE100FB25F1 /* InputUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC798912BC3BDE100FB25F1 /* InputUserInfo.swift */; };
 		4AF82E5F2BA1D3B900DCCA1B /* AskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF82E5E2BA1D3B900DCCA1B /* AskView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +56,7 @@
 		4AA31E512B0AEF04003FDF69 /* FacialExpressionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacialExpressionView.swift; sourceTree = "<group>"; };
 		4AA31E532B0AEF46003FDF69 /* FaceEmotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceEmotionManager.swift; sourceTree = "<group>"; };
 		4AC6D1B62BFB5F6A00A9B9C0 /* SnoozeModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = SnoozeModel.mlmodel; path = ../../Backend/SnoozeModel.mlmodel; sourceTree = "<group>"; };
-		4AC798912BC3BDE100FB25F1 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		4AC798912BC3BDE100FB25F1 /* InputUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputUserInfo.swift; sourceTree = "<group>"; };
 		4AF82E5E2BA1D3B900DCCA1B /* AskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,7 +151,7 @@
 				4A1762AC2AEBAFF700D14315 /* bear.json */,
 				4A1762AB2AEBAFF700D14315 /* congratulations.json */,
 				4A70712A2B230D06002A4E79 /* Utilities.swift */,
-				4AC798912BC3BDE100FB25F1 /* UserInfo.swift */,
+				4AC798912BC3BDE100FB25F1 /* InputUserInfo.swift */,
 				4A30F7892BCF52FD007A22F6 /* Urls.swift */,
 				4A532CED2BE4A9EF005B7C1D /* MapView.swift */,
 			);
@@ -247,7 +247,7 @@
 				4A7C04842BA2D6D700ACC5B3 /* ContentsManager.swift in Sources */,
 				4A30F78A2BCF52FD007A22F6 /* Urls.swift in Sources */,
 				4A1762B42AEBB4A700D14315 /* Description.swift in Sources */,
-				4AC798922BC3BDE100FB25F1 /* UserInfo.swift in Sources */,
+				4AC798922BC3BDE100FB25F1 /* InputUserInfo.swift in Sources */,
 				4A7D88702BC548E3009F13D7 /* EmotionRecord.swift in Sources */,
 				4A1762A72AEBAF9600D14315 /* LottieView.swift in Sources */,
 				4AA31E522B0AEF04003FDF69 /* FacialExpressionView.swift in Sources */,

@@ -20,7 +20,7 @@ struct HaruDiary: View {
     @State private var showRecommendedContent = false
     @State private var loginIsNeed = false
 //    @AppStorage("userInputIsNeed") private var userInfoIsNeed = true
-    @State private var userInfoIsNeed = false
+    @State private var userInfoIsNeed = true
     
     private var locationManager = LocationManager.manager
     
@@ -31,10 +31,13 @@ struct HaruDiary: View {
                     diary
                 } else if serverState == .bad {
                     disconnectionView
+                } else if serverState == .loading {
+                    loading
                 } else if todayUse {
                     alreadyUseView
                 }
             }
+            .transition(.scale)
             .navigationDestination(isPresented: $showRecommendedContent) {
                 ContentRecommender()
             }
@@ -61,8 +64,8 @@ struct HaruDiary: View {
         .sheet(isPresented: $showDescription) {
             Description()
         }
-        .sheet(isPresented: $userInfoIsNeed) {
-            UserInfo(isShow: $userInfoIsNeed)
+        .fullScreenCover(isPresented: $userInfoIsNeed) {
+            InputUserInfo(isShow: $userInfoIsNeed)
         }
         .onChange(of: locationManager.locationManager.authorizationStatus) { _ in
             if locationManager.locationManager.authorizationStatus == .authorizedWhenInUse ||
@@ -112,6 +115,7 @@ struct HaruDiary: View {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let _ = try JSONDecoder().decode(Bool.self, from: data)
+            serverState = .good
         } catch {
             serverState = .bad
         }
@@ -251,8 +255,15 @@ struct HaruDiary: View {
             locationManager.longitude = longitude
         }
     }
+    
+    private var loading: some View {
+        VStack(spacing: 50) {
+            ProgressView().scaleEffect(2)
+            Text("서버상태 확인중")
+        }
+    }
 }
 
 #Preview {
-    HaruDiary(serverState: .constant(.bad))
+    HaruDiary(serverState: .constant(.loading))
 }

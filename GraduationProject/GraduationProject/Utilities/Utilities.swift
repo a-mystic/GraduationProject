@@ -23,6 +23,7 @@ struct SafariView: UIViewControllerRepresentable {
 enum ServerState {
     case good
     case bad
+    case loading
 }
 
 var currentDate: String {
@@ -39,5 +40,17 @@ extension Dictionary.Values where Element == Double {
             return lhs + rhs
         }
         return sum / Double(self.count)
+    }
+}
+
+extension Dictionary.Values where Element == [String] {
+    var isCompletlyEmpty: Bool {
+        var sum = ""
+        for s in self {
+            for c in s {
+                sum += c
+            }
+        }
+        return sum.isEmpty
     }
 }

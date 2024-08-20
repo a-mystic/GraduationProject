@@ -1,5 +1,5 @@
 //
-//  UserInfo.swift
+//  InputUserInfo.swift
 //  GraduationProject
 //
 //  Created by a mystic on 4/8/24.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct UserInfo: View {
-    @Environment(\.dismiss) var dismiss
-    
+struct InputUserInfo: View {
     @Binding var isShow: Bool
+    
+    @State private var showError = false
     
     var body: some View {
         NavigationStack {
@@ -27,14 +27,20 @@ struct UserInfo: View {
                     }
                 }
                 if selectedNegativeCategories.count > 0 {
-                    Section("기분이 안좋을때 하는 행동들을 더 자세하게 선택해주세요") {
+                    Section {
                         negativeMore
+                    } header: {
+                        Text("기분이 안좋을때 하는 행동들을 더 자세하게 선택해주세요")
+                    } footer: {
+                        VStack {
+                            if showError {
+                                Text("모든 항목들에 대해서 1개 이상 체크해주세요")
+                                    .bold()
+                                    .foregroundStyle(.red)
+                            }
+                            save
+                        }
                     }
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    save
                 }
             }
         }
@@ -208,22 +214,30 @@ struct UserInfo: View {
     }
     
     private var save: some View {
-        Button("Save") {
-            if let positiveData = try? JSONEncoder().encode(selectedPositiveCategories),
-               let negativeData = try? JSONEncoder().encode(selectedNegativeCategories),
-               let positiveDetails = try? JSONEncoder().encode(selectedPositiveDetails),
-               let negativeDetails = try? JSONEncoder().encode(selectedNegativeDetails) {
-                selectedPositiveCategoriesAppStorage = positiveData
-                selectedNegativeCategoriesAppStorage = negativeData
-                selectedPositiveDetailsAppStorage = positiveDetails
-                selectedNegativeDetailsAppStorage = negativeDetails
+        Button {
+            if selectedPositiveCategories.isEmpty || selectedNegativeCategories.isEmpty || selectedPositiveDetails.values.isCompletlyEmpty || selectedNegativeDetails.values.isCompletlyEmpty {
+                showError = true
+            } else {
+                if let positiveData = try? JSONEncoder().encode(selectedPositiveCategories),
+                   let negativeData = try? JSONEncoder().encode(selectedNegativeCategories),
+                   let positiveDetails = try? JSONEncoder().encode(selectedPositiveDetails),
+                   let negativeDetails = try? JSONEncoder().encode(selectedNegativeDetails) {
+                    selectedPositiveCategoriesAppStorage = positiveData
+                    selectedNegativeCategoriesAppStorage = negativeData
+                    selectedPositiveDetailsAppStorage = positiveDetails
+                    selectedNegativeDetailsAppStorage = negativeDetails
+                }
+                isShow = false
             }
-            isShow = false
-            dismiss()
+        } label: {
+            Text("Save")
+                .frame(maxWidth: .infinity, maxHeight: 30)
         }
+        .padding(.vertical)
+        .buttonStyle(.borderedProminent)
     }
 }
 
 #Preview {
-    UserInfo(isShow: .constant(true))
+    InputUserInfo(isShow: .constant(true))
 }

@@ -203,6 +203,7 @@ struct AskView: View {
                 .frame(maxWidth: .infinity, maxHeight: 30)
         }
         .padding()
+        .padding(.horizontal)
         .buttonStyle(.borderedProminent)
     }
     
@@ -336,12 +337,12 @@ struct AskView: View {
     
     private var recordingStatus: some View {
         HStack {
-            Text(currentStatus.rawValue)
-            Text(emotionManager.currentEmotion)
-                .font(.largeTitle)
+            Text(emotionManager.currentEmotion).font(.largeTitle)
+            Text(currentStatus.rawValue).font(.callout).foregroundStyle(.white)
         }
-        .foregroundStyle(emotionManager.currentColor)
-        .font(.callout)
+        .padding()
+        .padding(.horizontal)
+        .background(emotionManager.currentColor.opacity(0.6), in: RoundedRectangle(cornerRadius: 20))
     }
     
     private let contentsLabel: [Int:String] = [
