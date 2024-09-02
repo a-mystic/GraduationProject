@@ -23,7 +23,7 @@ headers = {
 # defaultHistory는 일단 심리상담을 해주도록 기본 설정을 해놓은 변수입니다.
 geminiApiKey = "apiKey"
 genai.configure(api_key= geminiApiKey)
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gemini-1.5-flash")
 defaultHistory = [
     {"parts": ["앞으로 답변할때 사용자가 일부로 요구하지 않는다면 9문장 이내로 답변해주세요"], "role": "user"},
     {"parts": ["확실히, 저는 사용자가 특별히 요청하지 않는 이상 앞으로 답변을 9문장 이내로 제한하겠습니다."], "role": "model"},
