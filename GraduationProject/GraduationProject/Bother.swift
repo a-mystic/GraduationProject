@@ -32,8 +32,8 @@ struct Bother: View {
                         recordingStatus
                     }
                 } else {
-                    VStack(spacing: 40) {
-                        countdownAnimation(in: geometry.size)
+                    VStack(spacing: 70) {
+                        countdownAnimation(in: geometry.size).scaleEffect(1.3)
                         Text("오늘 하루 있었던 일들을 얼굴 표정에 나타내주세요")
                             .font(.title)
                     }
@@ -42,7 +42,9 @@ struct Bother: View {
             .padding(.horizontal)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    isTimerShow = true
+                    withAnimation {
+                        isTimerShow = true
+                    }
                 }
             }
         }
@@ -156,6 +158,7 @@ struct Bother: View {
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                 emotionManager.stopAnalyzing()
+                saveDiary()
                 withAnimation {
                     showBother = false
                 }
@@ -219,6 +222,24 @@ struct Bother: View {
             withAnimation(.linear(duration: 1)) {
                 countdownAngle = 1
             }
+        }
+    }
+    
+    @State private var recordedDiarys: [Diary] = []
+    @AppStorage("recordedDiarys") var recordedDiarysAppStorage = Data()
+    
+    private func saveDiary() {
+        decodeDiary()
+        let emotionValue = Double(emotionManager.isPositive) / Double(sumOfEmotionValues)
+        recordedDiarys.append(Diary(date: currentDate, emotionValue: emotionValue, content: "이날은 입력하기 귀찮았어요"))
+        if let data = try? JSONEncoder().encode(recordedDiarys) {
+            recordedDiarysAppStorage = data
+        }
+    }
+    
+    private func decodeDiary() {
+        if let data = try? JSONDecoder().decode([Diary].self, from: recordedDiarysAppStorage) {
+            recordedDiarys = data
         }
     }
 }

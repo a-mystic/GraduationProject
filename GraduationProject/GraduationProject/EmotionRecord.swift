@@ -31,7 +31,7 @@ struct EmotionRecord: View {
         .onAppear {
             decodeDiary()
             emotionChangeRatio = calcEmotionChangeRatio(recordedDiarysEmotionValues)
-            makeDummyDiary()
+//            makeDummyDiary() //test용도
         }
     }
     
@@ -322,25 +322,25 @@ struct EmotionRecord: View {
     }
     
     // 테스트용
-    private var testEmotionDatas: [String:Double] = [
-        "2024-09-01" : -0.1,
-        "2024-09-02" : -0.2,
-        "2024-09-03" : 0.3,
-        "2024-09-04" : 0.6,
-        "2024-09-05" : -0.5,
-        "2024-09-06" : 0,
-        "2024-09-07" : -0.66,
-    ]
-    
-    private func makeDummyDiary() {
-        recordedDiarys = []
-        for data in testEmotionDatas {
-            recordedDiarys.append(Diary(date: data.key, emotionValue: data.value, content: "오늘의 테스트용 일지\(data.key)"))
-        }
-        if let data = try? JSONEncoder().encode(recordedDiarys) {
-            recordedDiarysAppStorage = data
-        }
-    }
+//    private var testEmotionDatas: [String:Double] = [
+//        "2024-09-01" : -0.1,
+//        "2024-09-02" : -0.2,
+//        "2024-09-03" : 0.3,
+//        "2024-09-04" : 0.6,
+//        "2024-09-05" : -0.5,
+//        "2024-09-06" : 0,
+//        "2024-09-07" : -0.66,
+//    ]
+//    
+//    private func makeDummyDiary() {
+//        recordedDiarys = []
+//        for data in testEmotionDatas {
+//            recordedDiarys.append(Diary(date: data.key, emotionValue: data.value, content: "오늘의 테스트용 일지\(data.key)"))
+//        }
+//        if let data = try? JSONEncoder().encode(recordedDiarys) {
+//            recordedDiarysAppStorage = data
+//        }
+//    }
 }
 
 #Preview {
