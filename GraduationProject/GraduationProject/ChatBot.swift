@@ -107,9 +107,13 @@ struct ChatBot: View {
             TextField(placeHolderMessage, text: $enteredText, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
                 .focused($isFocused)
-                .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
                 .disabled(serverState == .bad)
+                .onChange(of: enteredText) { value in
+                    if let lastCharacter = value.last, lastCharacter.isEmoji {
+                        enteredText.removeLast()
+                    }
+                }
             send
         }
         .padding(.horizontal)
@@ -157,5 +161,5 @@ struct ChatBot: View {
 }
 
 #Preview {
-    ChatBot(serverState: .constant(.bad))
+    ChatBot(serverState: .constant(.good))
 }

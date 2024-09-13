@@ -20,7 +20,7 @@ struct HaruDiary: View {
     @State private var showRecommendedContent = false
     @State private var loginIsNeed = false
 //    @AppStorage("userInputIsNeed") private var userInfoIsNeed = true
-    @State private var userInfoIsNeed = true
+    @State private var userInfoIsNeed = false
     
     private var locationManager = LocationManager.manager
     
@@ -78,7 +78,13 @@ struct HaruDiary: View {
     @State private var todayUse = false
     
     private func checktodayUse() {
-        todayUse = recordedDiarys.keys.contains(currentDate)
+        var find = false
+        for diary in recordedDiarys {
+            if currentDate == diary.date {
+                find = true
+            }
+        }
+        todayUse = find
     }
     
     private var diary: some View {
@@ -86,12 +92,17 @@ struct HaruDiary: View {
             background
             VStack(spacing: 30) {
                 inputField
+                bother
                 analyze
             }
             .overlay {
                 ProgressView()
                     .scaleEffect(2)
                     .opacity(isFetching ? 1 : 0)
+                if showBother {
+                    Bother(showNext: $showRecommendedContent, showBother: $showBother)
+                        .transition(.move(edge: .bottom))
+                }
             }
         }
     }
@@ -101,10 +112,12 @@ struct HaruDiary: View {
             background
             VStack(spacing: 30) {
                 Image(systemName: "wifi.slash")
-                    .font(.system(size: 75))
+                    .font(.system(size: 50))
                 Text("서버와 연결상태가 원활하지 않아요.")
                     .bold()
             }
+            .padding()
+            .background(.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14))
         }
     }
     
@@ -138,8 +151,6 @@ struct HaruDiary: View {
     private var inputField: some View {
         TextField("진실한 감정으로 작성해주셔야 컨텐츠 추천에 용이해요", text: $inputText, axis: .vertical)
             .lineLimit(10...15)
-            .autocorrectionDisabled()
-            .textInputAutocapitalization(.never)
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 12)
@@ -150,6 +161,30 @@ struct HaruDiary: View {
             .foregroundStyle(.black)
             .padding()
             .focused($isFocused)
+            .onChange(of: inputText, perform: { value in
+                if let lastCharacter = value.last, lastCharacter.isEmoji {
+                    inputText.removeLast()
+                }
+            })
+    }
+    
+    @State private var showBother = false
+    
+    private var bother: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 2)) {
+                showBother = true
+            }
+        } label: {
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundStyle(.blue.opacity(0.5))
+                .overlay {
+                    Text("입력하기 귀찮아요")
+                        .foregroundStyle(.white)
+                }
+                .frame(maxWidth: .infinity, maxHeight: 45)
+        }
+        .padding(.horizontal)
     }
     
     private var analyze: some View {
@@ -158,7 +193,7 @@ struct HaruDiary: View {
                 await analyzeHaru()
             }
         } label: {
-            Text("분석하기")
+            Text("입력완료")
                 .frame(maxWidth: .infinity, maxHeight: 30)
         }
         .padding(.horizontal)
@@ -175,7 +210,7 @@ struct HaruDiary: View {
     @State private var isFetching = false
     @State private var showAskView = false
     @State private var showDiaryError = false
-    @State private var recordedDiarys: [String:[Double:String]] = [:]   // [현재날짜:[감정지수:일기내용]]
+    @State private var recordedDiarys: [Diary] = []
     
     @AppStorage("recordedDiarys") var recordedDiarysAppStorage = Data()
     
@@ -200,14 +235,14 @@ struct HaruDiary: View {
     
     private func saveDiary() {
         decodeDiary()
-        recordedDiarys[currentDate] = [contentsManager.sentimentValue:inputText]
+        recordedDiarys.append(Diary(date: currentDate, emotionValue: contentsManager.sentimentValue, content: inputText))
         if let data = try? JSONEncoder().encode(recordedDiarys) {
             recordedDiarysAppStorage = data
         }
     }
     
     private func decodeDiary() {
-        if let data = try? JSONDecoder().decode([String:[Double:String]].self, from: recordedDiarysAppStorage) {
+        if let data = try? JSONDecoder().decode([Diary].self, from: recordedDiarysAppStorage) {
             recordedDiarys = data
         }
     }
@@ -219,8 +254,8 @@ struct HaruDiary: View {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let calendar = Calendar.current
         if let date30DaysAgo = calendar.date(byAdding: .day, value: -30, to: currentDate) {
-            recordedDiarys = recordedDiarys.filter { (key, _) -> Bool in
-                if let date = dateFormatter.date(from: key) {
+            recordedDiarys = recordedDiarys.filter { diary in
+                if let date = dateFormatter.date(from: diary.date) {
                     return date >= date30DaysAgo
                 }
                 return false
@@ -233,9 +268,11 @@ struct HaruDiary: View {
     
     private var alreadyUseView: some View {
         VStack(spacing: 30) {
-            Text("☑️").font(.system(size: 100))
+            Text("☑️").font(.system(size: 50))
             Text("오늘은 이미 작성했어요. 내일 다시 작성 해주세요.")
         }
+        .padding()
+        .background(.gray.opacity(0.3), in: RoundedRectangle(cornerRadius: 14))
     }
     
     private let contentsLabel: [Int:String] = [
@@ -265,5 +302,5 @@ struct HaruDiary: View {
 }
 
 #Preview {
-    HaruDiary(serverState: .constant(.loading))
+    HaruDiary(serverState: .constant(.good))
 }
