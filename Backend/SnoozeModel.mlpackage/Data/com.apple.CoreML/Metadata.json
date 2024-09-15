@@ -1,0 +1,12 @@
+{
+  "MLModelVersionStringKey" : "1.0.0",
+  "MLModelDescriptionKey" : "졸업작품을 위해 자체데이터셋으로 학습되어 온디바이스에서 작동하도록 개발된 콘텐츠추천 모델 입니다.",
+  "MLModelCreatorDefinedKey" : {
+    "com.apple.createml.app.tag" : "121.4",
+    "com.apple.createml.version" : "14.5.0",
+    "com.apple.coreml.model.preview.type" : "tabularRegressor",
+    "com.apple.createml.app.version" : "5.0"
+  },
+  "MLModelAuthorKey" : "홍시은, 김도현",
+  "MLModelLicenseKey" : "MIT"
+}

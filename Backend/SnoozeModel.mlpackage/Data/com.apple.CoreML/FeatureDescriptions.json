@@ -1,0 +1,15 @@
+{
+  "Outputs" : {
+    "Content" : {
+      "MLFeatureShortDescription" : "라벨링된 콘텐츠"
+    }
+  },
+  "Inputs" : {
+    "Emotion value" : {
+      "MLFeatureShortDescription" : "사용자의 감정수치"
+    }
+  },
+  "TrainingInputs" : {
+
+  }
+}
