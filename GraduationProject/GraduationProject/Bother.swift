@@ -149,17 +149,20 @@ struct Bother: View {
     }
     
     private var recordingStatus: some View {
-        HStack {
-            Text(emotionManager.currentEmotion).font(.largeTitle)
-            Text(currentStatus.rawValue).font(.callout).foregroundStyle(.white)
+        VStack {
+            Text(emotionManager.currentEmotion)
+                .font(.system(size: 150))
+            Text(currentStatus.rawValue)
+                .font(.callout)
+                .foregroundStyle(.white)
         }
         .padding()
         .padding(.horizontal)
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                emotionManager.stopAnalyzing()
                 saveDiary()
                 withAnimation {
+                    emotionManager.stopAnalyzing()
                     showBother = false
                 }
                 recommendContent()

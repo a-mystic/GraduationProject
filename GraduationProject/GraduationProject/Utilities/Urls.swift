@@ -8,7 +8,7 @@
 import Foundation
 
 struct ServerUrls {
-    static let base = "ngrok url"
+    static let base = "ngrokurl"
     static let sentimentValue = "\(base)/sentimentValue"
     static let chat = "\(base)/chat"
     static let check = "\(base)/check"

@@ -21,7 +21,7 @@ headers = {
 
 # google gemini를 사용하였습니다.
 # defaultHistory는 일단 심리상담을 해주도록 기본 설정을 해놓은 변수입니다.
-geminiApiKey = "apiKey"
+geminiApiKey = "geminikey"
 genai.configure(api_key= geminiApiKey)
 model = genai.GenerativeModel("gemini-1.5-flash")
 defaultHistory = [
@@ -58,7 +58,7 @@ async def calcSentimentValue(inputText: str):
     # return {"sentimentValue" : normalizedConfidence}
 
     #test
-    return {"sentimentValue" : 0.7}
+    return {"sentimentValue" : -0.62}
 
 def insertMessageToMongodb(message: str, role: str):
     collection.insert_one({"parts": message, "role": role})

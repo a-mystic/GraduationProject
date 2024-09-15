@@ -31,7 +31,7 @@ struct EmotionRecord: View {
         .onAppear {
             decodeDiary()
             emotionChangeRatio = calcEmotionChangeRatio(recordedDiarysEmotionValues)
-//            makeDummyDiary() //test용도
+            makeDummyDiary() //test용도
         }
     }
     
@@ -228,35 +228,37 @@ struct EmotionRecord: View {
     @ViewBuilder
     private func cards(in size: CGSize) -> some View {
         let gridItemSize = gridItemWidthThatFits(count: recordedDiarys.count, size: size, atAspectRatio: 1.0)
-        LazyVGrid(
-            columns: [
-                GridItem(.adaptive(minimum: gridItemSize), spacing: 10),
-                GridItem(.adaptive(minimum: gridItemSize), spacing: 10)
-            ],
-            spacing: 10
-        ) {
-            ForEach(recordedDiarys.sorted(by: { $0.date < $1.date }), id: \.date) { diary in
-                ZStack {
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundStyle(emotionValueToColor(diary.emotionValue))
-                    VStack {
-                        Text(emotionValueToEmotion(diary.emotionValue))
-                            .font(.system(size: 50))
-                        Text(diary.content)
-                            .font(.body)
-//                                .lineLimit(2)
+        ScrollView {
+            LazyVGrid(
+                columns: [
+                    GridItem(.adaptive(minimum: gridItemSize), spacing: 10),
+                    GridItem(.adaptive(minimum: gridItemSize), spacing: 10)
+                ],
+                spacing: 10
+            ) {
+                ForEach(recordedDiarys.sorted(by: { $0.date < $1.date }), id: \.date) { diary in
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 14)
+                            .foregroundStyle(emotionValueToColor(diary.emotionValue))
+                        VStack {
+                            Text(emotionValueToEmotion(diary.emotionValue))
+                                .font(.system(size: 50))
+                            Text(diary.content)
+                                .font(.body)
+                                .lineLimit(2)
+                        }
+                        .padding()
+                        .padding(.vertical)
                     }
-                    .padding()
-                    .padding(.vertical)
-                }
-                .onTapGesture {
-                    selectedDate = diary.date
-                    showDetail = true
+                    .onTapGesture {
+                        selectedDate = diary.date
+                        showDetail = true
+                    }
                 }
             }
-        }
-        .sheet(isPresented: $showDetail) {
-            DetailRecord(selectedDate: $selectedDate)
+            .sheet(isPresented: $showDetail) {
+                DetailRecord(selectedDate: $selectedDate)
+            }
         }
     }
     
@@ -322,25 +324,28 @@ struct EmotionRecord: View {
     }
     
     // 테스트용
-//    private var testEmotionDatas: [String:Double] = [
-//        "2024-09-01" : -0.1,
-//        "2024-09-02" : -0.2,
-//        "2024-09-03" : 0.3,
-//        "2024-09-04" : 0.6,
-//        "2024-09-05" : -0.5,
-//        "2024-09-06" : 0,
-//        "2024-09-07" : -0.66,
-//    ]
-//    
-//    private func makeDummyDiary() {
-//        recordedDiarys = []
-//        for data in testEmotionDatas {
-//            recordedDiarys.append(Diary(date: data.key, emotionValue: data.value, content: "오늘의 테스트용 일지\(data.key)"))
-//        }
-//        if let data = try? JSONEncoder().encode(recordedDiarys) {
-//            recordedDiarysAppStorage = data
-//        }
-//    }
+    private var testEmotionDatas: [String:Double] = [
+        "2024-09-01" : -0.1,
+        "2024-09-03" : -0.2,
+        "2024-09-05" : 0.3,
+        "2024-09-07" : 0.6,
+        "2024-09-09" : -0.5,
+        "2024-09-11" : 0,
+        "2024-09-13" : -0.66,
+    ]
+    
+    private func makeDummyDiary() {
+        if recordedDiarys.count == 1 {
+            var dummys = [Diary]()
+            for data in testEmotionDatas {
+                dummys.append(Diary(date: data.key, emotionValue: data.value, content: "오늘의 일지는 아침에 일어난 것부터 시작해서 저녁시간 까지의 기록입니다. 이 일지는 \(data.key)일에 작성되었습니다."))
+            }
+            recordedDiarys += dummys
+            if let data = try? JSONEncoder().encode(recordedDiarys) {
+                recordedDiarysAppStorage = data
+            }
+        }
+    }
 }
 
 #Preview {

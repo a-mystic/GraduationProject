@@ -74,7 +74,7 @@ struct ContentRecommender: View {
                 .clipShape(RoundedRectangle(cornerRadius: 14))
             Group {
                 if contentsManager.recommendContent != "" {
-                    Text("\(contentsManager.recommendContent) 추천드려요")
+                    Text("\(contentsManager.recommendContent) \(contentsManager.recommendCategory) 추천드려요")
                 } else {
                     Text("\(contentsManager.recommendCategory) 추천드려요")
                 }

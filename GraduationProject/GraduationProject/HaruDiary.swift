@@ -19,8 +19,8 @@ struct HaruDiary: View {
     @State private var showDescription = false
     @State private var showRecommendedContent = false
     @State private var loginIsNeed = false
-//    @AppStorage("userInputIsNeed") private var userInfoIsNeed = true
-    @State private var userInfoIsNeed = false
+    @AppStorage("userInputIsNeed") private var userInfoIsNeed = true
+//    @State private var userInfoIsNeed = true
     
     private var locationManager = LocationManager.manager
     
