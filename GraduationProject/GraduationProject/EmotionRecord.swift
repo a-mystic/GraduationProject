@@ -9,6 +9,10 @@ import SwiftUI
 import Charts
 
 struct EmotionRecord: View {
+    init() {
+        makeDetailMessage()
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             Form {
@@ -105,9 +109,6 @@ struct EmotionRecord: View {
         }
         .frame(width: size.width * 0.9, height: size.height * 0.6)
         .padding()
-        .onAppear {
-            makeDetailMessage()
-        }
     }
     
     private func makeDateSimply(_ date: String) -> String {

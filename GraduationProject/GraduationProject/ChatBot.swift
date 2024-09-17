@@ -125,6 +125,7 @@ struct ChatBot: View {
         Button {
             let text = enteredText
             enteredText = ""
+            isFocused = false
             withAnimation {
                 if text != "" {
                     messageDatas.append(Chat(message: text, isSender: true))
