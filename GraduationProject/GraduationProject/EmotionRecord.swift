@@ -9,10 +9,6 @@ import SwiftUI
 import Charts
 
 struct EmotionRecord: View {
-    init() {
-        makeDetailMessage()
-    }
-    
     var body: some View {
         GeometryReader { geometry in
             Form {
@@ -35,22 +31,32 @@ struct EmotionRecord: View {
         .onAppear {
             decodeDiary()
             emotionChangeRatio = calcEmotionChangeRatio(recordedDiarysEmotionValues)
+            emotionCoefficient = coefficientOfVariation(recordedDiarysEmotionValues)
             makeDummyDiary() //test용도
+            makeDetailMessage()
+            
         }
     }
     
     @State private var emotionChangeRatio: Double = 0
+    @State private var emotionCoefficient: Double = 0
     
     private var diagnosedEmotion: String {
-        if emotionChangeRatio > 0.3 {
+        if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
             return "😱"
         } else {
+            if recordedDiarysEmotionValues.isEmpty {
+                return "📂"
+            }
             return emotionValueToEmotion(recordedDiarysEmotionValues.mean())
         }
     }
     
     private var diagnosisMessage: String {
-        if emotionChangeRatio > 0.3 {
+        if recordedDiarysEmotionValues.isEmpty {
+            return "기록이 존재하지 않아요."
+        }
+        if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
             return "최근 한달간 감정기복이 심해요\n심리상담 챗봇을 이용해요"
         }
         if recordedDiarysEmotionValues.mean() > 0 {
@@ -74,6 +80,15 @@ struct EmotionRecord: View {
             lhs = emotionValue
         }
         return Double(find) / Double(emotions.count)
+    }
+    
+    private func coefficientOfVariation(_ emotions: [Double]) -> Double {
+        if emotions.isEmpty {
+            return 0
+        } else {
+            let variance = emotions.map { pow($0 - emotions.mean(), 2) }.reduce(0, +) / Double(emotions.count)
+            return abs(sqrt(variance) / emotions.mean())
+        }
     }
     
     @State private var selectedPickerStatus: PickerStatus = .summary
@@ -171,7 +186,7 @@ struct EmotionRecord: View {
         let positiveRatio = positiveSum / absSum
         if mean > 0 {
             detailMessage = "최근 한 달간 감정 수치들의 평균은 \(String(format: "%.2f", mean))으로 감정이 긍정적이었어요.\n그중 \(String(format: "%.2f", positiveRatio * 100))%는 긍정적인 감정이에요."
-            if emotionChangeRatio > 0.3 {
+            if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
                 var lhs: Double = 0
                 if let firstEmotion = recordedDiarysEmotionValues.first {
                     lhs = firstEmotion
@@ -188,7 +203,7 @@ struct EmotionRecord: View {
             }
         } else {
             detailMessage = "최근 한 달간 감정 수치들의 평균은 \(String(format: "%.2f", mean))으로 감정이 부정적이었어요.\n그중 \(String(format: "%.2f", negativeRatio * 100))%는 부정적인 감정이에요."
-            if emotionChangeRatio > 0.3 {
+            if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
                 var lhs: Double = 0
                 if let firstEmotion = recordedDiarysEmotionValues.first {
                     lhs = firstEmotion
@@ -203,6 +218,9 @@ struct EmotionRecord: View {
                 }
                 detailMessage = "최근 한 달간 감정 수치들의 평균은 \(String(format: "%.2f", mean))으로 감정이 부정적이었어요.\n그중 \(String(format: "%.2f", negativeRatio * 100))%는 부정적인 감정이에요.\n거기에 더해서 감정이 기록된 \(recordedDiarys.count)일 중 감정기복의 횟수가 \(emotionChangeCount)번으로 안좋게 나타났어요."
             }
+        }
+        if recordedDiarys.isEmpty {
+            detailMessage = "기록이 존재하지 않아요."
         }
     }
     
