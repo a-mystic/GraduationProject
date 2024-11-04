@@ -162,7 +162,7 @@ struct HaruDiary: View {
             .padding()
             .focused($isFocused)
             .onChange(of: inputText, perform: { value in
-                if let lastCharacter = value.last, lastCharacter.isEmoji {
+                if let lastCharacter = value.last, lastCharacter.isEmoji, value.count >= 1000 {
                     inputText.removeLast()
                 }
             })
@@ -185,6 +185,16 @@ struct HaruDiary: View {
                 .frame(maxWidth: .infinity, maxHeight: 45)
         }
         .padding(.horizontal)
+        .overlay {
+            VStack {
+                HStack {
+                    Text("\(inputText.count)/1000").font(.footnote).foregroundStyle(.gray)
+                    Spacer()
+                }
+                .padding()
+                Spacer().frame(height: 80)
+            }
+        }
     }
     
     private var analyze: some View {

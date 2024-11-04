@@ -32,39 +32,17 @@ struct EmotionRecord: View {
             decodeDiary()
             emotionChangeRatio = calcEmotionChangeRatio(recordedDiarysEmotionValues)
             emotionCoefficient = coefficientOfVariation(recordedDiarysEmotionValues)
+            makeDiagnosisEmotion()
+            makeDiagnosisMessage()
             makeDetailMessage()
-            // test
             makeDummyDiary()
         }
     }
     
     @State private var emotionChangeRatio: Double = 0
     @State private var emotionCoefficient: Double = 0
-    
-    private var diagnosedEmotion: String {
-        if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
-            return "😱"
-        } else {
-            if recordedDiarysEmotionValues.isEmpty {
-                return "📂"
-            }
-            return emotionValueToEmotion(recordedDiarysEmotionValues.mean())
-        }
-    }
-    
-    private var diagnosisMessage: String {
-        if recordedDiarysEmotionValues.isEmpty {
-            return "기록이 존재하지 않아요."
-        }
-        if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
-            return "최근 한달간 감정기복이 심해요\n심리상담 챗봇을 이용해요"
-        }
-        if recordedDiarysEmotionValues.mean() > 0 {
-            return "최근 한달간 느끼신 감정은 행복입니다"
-        } else {
-            return "최근 한달간 느끼신 감정은 불행입니다\n심리상담 챗봇을 이용해요"
-        }
-    }
+    @State private var diagnosedEmotion: String = ""
+    @State private var diagnosisMessage: String = ""
     
     private func calcEmotionChangeRatio(_ emotions: [Double]) -> Double {
         var lhs: Double = 0
@@ -88,6 +66,39 @@ struct EmotionRecord: View {
         } else {
             let variance = emotions.map { pow($0 - emotions.mean(), 2) }.reduce(0, +) / Double(emotions.count)
             return abs(sqrt(variance) / emotions.mean())
+        }
+    }
+    
+    private func makeDiagnosisEmotion() {
+        if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
+            diagnosedEmotion = "😱"
+            return
+        } else {
+            if recordedDiarysEmotionValues.isEmpty {
+                diagnosedEmotion = "📂"
+                return
+            } else {
+                diagnosedEmotion = emotionValueToEmotion(recordedDiarysEmotionValues.mean())
+                return 
+            }
+        }
+    }
+    
+    private func makeDiagnosisMessage() {
+        if recordedDiarysEmotionValues.isEmpty {
+            diagnosisMessage = "기록이 존재하지 않아요."
+            return
+        }
+        if emotionChangeRatio > 0.3 || emotionCoefficient > 0.5 {
+            diagnosisMessage = "최근 한달간 감정기복이 심해요\n심리상담 챗봇을 이용해요"
+            return
+        }
+        if recordedDiarysEmotionValues.mean() > 0 {
+            diagnosisMessage = "최근 한달간 느끼신 감정은 행복입니다"
+            return
+        } else {
+            diagnosisMessage = "최근 한달간 느끼신 감정은 불행입니다\n심리상담 챗봇을 이용해요"
+            return
         }
     }
     
