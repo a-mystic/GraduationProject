@@ -268,8 +268,6 @@ struct AskView: View {
         "야외활동" : ["산책", "운동", "쇼핑"]
     ]
     
-    // main = 야외활동, recommendedCategory = 운동
-    
     private func recommendContent(by value: Double, answer: AnswerState) {
         let emotionValue = createAdvancedEmotionValue(value, answer: answer)
         if let model = try? SnoozeModel(configuration: MLModelConfiguration()),

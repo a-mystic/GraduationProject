@@ -10,8 +10,8 @@ import google.generativeai as genai
 
 # naver sentiment api 초기화
 app = FastAPI()
-naverClient_id = "cliendId"
-naverClient_secret = "clientSecret"
+naverClient_id = "fill"
+naverClient_secret = "fill"
 naverApiUrl="https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze"
 headers = {
     "X-NCP-APIGW-API-KEY-ID": naverClient_id,
@@ -47,18 +47,17 @@ pipeline = [
 # 호출방식: [localhost주소]/sentimentValue?inputText="text"
 @app.get("/sentimentValue")
 async def calcSentimentValue(inputText: str):
-    # data = {"content" : inputText}
-    # response = requests.post(naverApiUrl, data=json.dumps(data), headers=headers).json()
-    # maxConfidence = max(response["document"]["confidence"], key=response["document"]["confidence"].get)
-    # # 분석한 감정에 나타난 수치를 0에서1 값으로 표현하기위해 100으로 나누는 코드입니다.
-    # normalizedConfidence = response["document"]["confidence"][maxConfidence] / 100
-    # # 분석한 감정이 부정적이라면 감정수치에 마이너스를 곱해서 감정수치를 -1에서1 값으로 표현합니다.
-    # if str(response["document"]["sentiment"]) == "negative":
-    #     normalizedConfidence *= -1 
-    # return {"sentimentValue" : normalizedConfidence}
-
-    #test
-    return {"sentimentValue" : -0.62}
+    # Test 
+    # return {"sentimentValue" : 0.6 }
+    data = {"content" : inputText}
+    response = requests.post(naverApiUrl, data=json.dumps(data), headers=headers).json()
+    maxConfidence = max(response["document"]["confidence"], key=response["document"]["confidence"].get)
+    # 분석한 감정에 나타난 수치를 0에서1 값으로 표현하기위해 100으로 나누는 코드입니다.
+    normalizedConfidence = response["document"]["confidence"][maxConfidence] / 100
+    # 분석한 감정이 부정적이라면 감정수치에 마이너스를 곱해서 감정수치를 -1에서1 값으로 표현합니다.
+    if str(response["document"]["sentiment"]) == "negative":
+        normalizedConfidence *= -1 
+    return {"sentimentValue" : normalizedConfidence}
 
 def insertMessageToMongodb(message: str, role: str):
     collection.insert_one({"parts": message, "role": role})

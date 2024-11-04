@@ -74,7 +74,13 @@ struct ContentRecommender: View {
                 .clipShape(RoundedRectangle(cornerRadius: 14))
             Group {
                 if contentsManager.recommendContent != "" {
-                    Text("\(contentsManager.recommendContent)\(contentsManager.recommendCategory) 추천드려요")
+                    VStack {
+                        Text(contentsManager.recommendCategory)
+                            .font(.body)
+                            .padding(10)
+                            .background(.gray.opacity(0.5), in: RoundedRectangle(cornerRadius: 12))
+                        Text("\(contentsManager.recommendContent) 추천드려요")
+                    }
                 } else {
                     Text("\(contentsManager.recommendCategory) 추천드려요")
                 }
@@ -84,7 +90,7 @@ struct ContentRecommender: View {
             .foregroundStyle(.white.opacity(0.9))
             .padding()
             .padding(.horizontal)
-            .background(.black.opacity(0.7))
+            .background(.black.opacity(0.6))
             .clipShape(RoundedRectangle(cornerRadius: 14))
         }
         .overlay {
@@ -104,15 +110,15 @@ struct ContentRecommender: View {
     private var place: String {
         switch contentsManager.recommendContent {
         case "운동":
-            return "Gym"
+            return "체육관"
         case "산책":
-            return "Park"
+            return "운동장"
         case "쇼핑":
-            return "Shop"
+            return "쇼핑몰"
         default:
-            return "Park"
+            return "운동장"
         }
-    }   // place는 영어로 해야합니다. Park, department store 등등
+    }
     
     private var websiteUrl: String {
         switch contentsManager.recommendCategory {
@@ -244,8 +250,8 @@ struct ContentRecommender: View {
 
 #Preview {
     let contentsManager = ContentsManager()
-    contentsManager.setRecommendCategory(to: "음악")
-    contentsManager.setRecommendContent(to: "팝송")
+    contentsManager.setRecommendCategory(to: "야외활동")
+    contentsManager.setRecommendContent(to: "운동")
     return ContentRecommender()
         .environmentObject(contentsManager)
 }

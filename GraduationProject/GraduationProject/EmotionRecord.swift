@@ -32,9 +32,9 @@ struct EmotionRecord: View {
             decodeDiary()
             emotionChangeRatio = calcEmotionChangeRatio(recordedDiarysEmotionValues)
             emotionCoefficient = coefficientOfVariation(recordedDiarysEmotionValues)
-            makeDummyDiary() //test용도
             makeDetailMessage()
-            
+            // test
+            makeDummyDiary()
         }
     }
     
@@ -342,15 +342,15 @@ struct EmotionRecord: View {
         }
     }
     
-    // 테스트용
+    // test
     private var testEmotionDatas: [String:Double] = [
-        "2024-09-01" : -0.1,
-        "2024-09-03" : -0.2,
-        "2024-09-05" : 0.3,
-        "2024-09-07" : 0.6,
-        "2024-09-09" : -0.5,
-        "2024-09-11" : 0,
-        "2024-09-13" : -0.66,
+        "2024-10-15" : -0.1,
+        "2024-10-17" : -0.2,
+        "2024-10-18" : 0.3,
+        "2024-10-20" : 0.6,
+        "2024-10-23" : -0.5,
+        "2024-10-25" : 0,
+        "2024-10-27" : -0.66,
     ]
     
     private func makeDummyDiary() {

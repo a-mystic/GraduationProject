@@ -19,8 +19,7 @@ struct HaruDiary: View {
     @State private var showDescription = false
     @State private var showRecommendedContent = false
     @State private var loginIsNeed = false
-    @AppStorage("userInputIsNeed") private var userInfoIsNeed = true
-//    @State private var userInfoIsNeed = true
+    @State private var userInfoIsNeed = false
     
     private var locationManager = LocationManager.manager
     
@@ -58,7 +57,8 @@ struct HaruDiary: View {
             Task {
                 await checkServer()
                 diaryFiltering()
-                checktodayUse()
+                // test
+//                checktodayUse()
             }
         }
         .sheet(isPresented: $showDescription) {
@@ -190,7 +190,9 @@ struct HaruDiary: View {
     private var analyze: some View {
         Button {
             Task {
-                await analyzeHaru()
+                if !inputText.isEmpty {
+                    await analyzeHaru()
+                }
             }
         } label: {
             Text("입력완료")
@@ -235,7 +237,12 @@ struct HaruDiary: View {
     
     private func saveDiary() {
         decodeDiary()
-        recordedDiarys.append(Diary(date: currentDate, emotionValue: contentsManager.sentimentValue, content: inputText))
+        // if currentDate contain recordedDiarys
+        if let index = recordedDiarys.firstIndex(where: { $0.date == currentDate }) {
+            recordedDiarys[index] = Diary(date: currentDate, emotionValue: contentsManager.sentimentValue, content: inputText)
+        } else {
+            recordedDiarys.append(Diary(date: currentDate, emotionValue: contentsManager.sentimentValue, content: inputText))
+        }
         if let data = try? JSONEncoder().encode(recordedDiarys) {
             recordedDiarysAppStorage = data
         }

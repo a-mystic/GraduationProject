@@ -16,20 +16,6 @@ struct ChatBot: View {
     
     @State private var messageDatas = [Chat]()
     
-//    private var testEmotionDatas: [String:Double] = [
-//        "2024-04-08" : 0.6,
-//        "2024-04-09" : 0.6,
-//        "2024-04-10" : 0.2,
-//    ]
-//    
-//    private var isLocked: Bool {
-//        if testEmotionDatas.values.mean() >= 0 {
-//            return true
-//        } else {
-//            return false
-//        }
-//    }
-    
     var body: some View {
         NavigationStack {
             VStack {
