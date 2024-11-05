@@ -209,6 +209,8 @@ struct Bother: View {
     @State private var faceMode = false
     
     private func startCountdown() {
+        // test
+        emotionManager.reset()
         withAnimation(.linear(duration: 1)) {
             countdownAngle = 1
         }

@@ -50,4 +50,17 @@ class FaceEmotionManager: ObservableObject {
     func stopAnalyzing() {
         isAnalyzing = false
     }
+    
+    func reset() {
+        faceEmotions = [
+            "😁" : 0,
+            "🙂" : 0,
+            "😡" : 0,
+            "😠" : 0,
+            "😮" : 0
+        ]
+        isAnalyzing = false
+        currentEmotion = "😐"
+        isPositive = 0
+    }
 }

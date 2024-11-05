@@ -172,6 +172,8 @@ struct HaruDiary: View {
     
     private var bother: some View {
         Button {
+            // test
+            contentsManager.reset()
             withAnimation(.easeInOut(duration: 2)) {
                 showBother = true
             }

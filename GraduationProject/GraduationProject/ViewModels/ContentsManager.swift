@@ -28,4 +28,11 @@ class ContentsManager: ObservableObject {
     func setNeedHate(to: Bool) {
         needHate = to
     }
+    
+    func reset() {
+        recommendCategory = ""
+        recommendContent = ""
+        sentimentValue = 0.7
+        needHate = false
+    }
 }
