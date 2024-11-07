@@ -1,9 +1,9 @@
 # 졸업작품
 
 
+시연 영상
 
-https://github.com/user-attachments/assets/d43210e7-7086-4ecc-9f5f-747040d63222
+https://github.com/user-attachments/assets/e6b51255-c048-45ce-b880-ea37edd07d88
 
 
 
-최종 시연 영상
