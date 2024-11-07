@@ -109,7 +109,8 @@ struct Bother: View {
     // main = 야외활동, recommendedCategory = 운동
     
     private func recommendContent() {
-        let emotionValue = Double(emotionManager.isPositive) / Double(sumOfEmotionValues)
+        let emotionValue = (Double(emotionManager.isPositive) / Double(sumOfEmotionValues)) * 2
+        contentsManager.setSentimentValue(to: emotionValue)
         if let model = try? SnoozeModel(configuration: MLModelConfiguration()),
            let contentLabel = try? model.prediction(input: .init(Emotion_value: emotionValue)),
            let recommendedCategory = contentsLabel[Int(contentLabel.Content.rounded())] {
@@ -120,7 +121,6 @@ struct Bother: View {
                     mainCategory = item
                 }
             }
-            
             if emotionValue >= 0 {
                 if selectedPositiveCategories.contains(mainCategory) {
                     if let content = selectedPositiveDetails[mainCategory]?.randomElement() {
@@ -159,7 +159,7 @@ struct Bother: View {
         .padding()
         .padding(.horizontal)
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
                 saveDiary()
                 withAnimation {
                     emotionManager.stopAnalyzing()
@@ -211,6 +211,7 @@ struct Bother: View {
     private func startCountdown() {
         // test
         emotionManager.reset()
+        contentsManager.reset()
         withAnimation(.linear(duration: 1)) {
             countdownAngle = 1
         }
@@ -236,7 +237,11 @@ struct Bother: View {
     private func saveDiary() {
         decodeDiary()
         let emotionValue = Double(emotionManager.isPositive) / Double(sumOfEmotionValues)
-        recordedDiarys.append(Diary(date: currentDate, emotionValue: emotionValue, content: "이날은 입력하기 귀찮았어요"))
+        if let index = recordedDiarys.firstIndex(where: { $0.date == currentDate }) {
+            recordedDiarys[index] = Diary(date: currentDate, emotionValue: emotionValue, content: "이날은 입력하기 귀찮았어요")
+        } else {
+            recordedDiarys.append(Diary(date: currentDate, emotionValue: emotionValue, content: "이날은 입력하기 귀찮았어요"))
+        }
         if let data = try? JSONEncoder().encode(recordedDiarys) {
             recordedDiarysAppStorage = data
         }

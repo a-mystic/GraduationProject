@@ -19,7 +19,7 @@ struct HaruDiary: View {
     @State private var showDescription = false
     @State private var showRecommendedContent = false
     @State private var loginIsNeed = false
-    @State private var userInfoIsNeed = false
+    @AppStorage("userInfoIsNeed") private var userInfoIsNeed = true
     
     private var locationManager = LocationManager.manager
     
@@ -101,7 +101,7 @@ struct HaruDiary: View {
                     .opacity(isFetching ? 1 : 0)
                 if showBother {
                     Bother(showNext: $showRecommendedContent, showBother: $showBother)
-                        .transition(.move(edge: .bottom))
+                        .transition(.opacity)
                 }
             }
         }
@@ -169,11 +169,13 @@ struct HaruDiary: View {
     }
     
     @State private var showBother = false
+    @ObservedObject private var emotionManager = FaceEmotionManager.shared
     
     private var bother: some View {
         Button {
             // test
             contentsManager.reset()
+            emotionManager.reset()
             withAnimation(.easeInOut(duration: 2)) {
                 showBother = true
             }
@@ -203,6 +205,8 @@ struct HaruDiary: View {
         Button {
             Task {
                 if !inputText.isEmpty {
+                    emotionManager.reset()
+                    contentsManager.reset()
                     await analyzeHaru()
                 }
             }
@@ -249,7 +253,6 @@ struct HaruDiary: View {
     
     private func saveDiary() {
         decodeDiary()
-        // if currentDate contain recordedDiarys
         if let index = recordedDiarys.firstIndex(where: { $0.date == currentDate }) {
             recordedDiarys[index] = Diary(date: currentDate, emotionValue: contentsManager.sentimentValue, content: inputText)
         } else {

@@ -15,15 +15,15 @@ struct MapView: View {
     static private let longitude = LocationManager.manager.longitude
     
     // test
-//    @State private var region = MKCoordinateRegion(
-//        center: CLLocationCoordinate2D(latitude: 36.628293, longitude: 127.456528), // 테스트 충북대 좌표
-//        span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)       // 반경
-//    )
-    
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), // 
+        center: CLLocationCoordinate2D(latitude: 36.628261, longitude: 127.459308), 
         span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)       // 반경
     )
+    
+//    @State private var region = MKCoordinateRegion(
+//        center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), // 
+//        span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)       // 반경
+//    )
     
     @State private var parks: [ParkAnnotation] = []
     @Environment(\.dismiss) var dismiss

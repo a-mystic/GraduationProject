@@ -209,14 +209,7 @@ struct ContentRecommender: View {
         "영상시청" : ["영화", "유튜브"],
         "음악" : ["음악"],
         "책" : ["책"],
-        "야외활동" : ["산책", "운동", "쇼핑"]
-    ]
-    
-    private let CategoryDetails: [String:[String]] = [
-        "영상시청" : ["코미디", "모험", "다큐멘터리", "과학", "역사"],
-        "음악" : ["발라드", "케이팝", "팝송", "클래식"],
-        "책" : ["추리소설", "인문학", "심리학", "과학", "공학", "컴퓨터"],
-        "야외활동": ["산책", "쇼핑", "운동"]
+        "야외활동" : ["야외활동"]
     ]
     
     private func hate(in geometry: GeometryProxy) -> some View {

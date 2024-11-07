@@ -30,12 +30,13 @@ struct EmotionRecord: View {
         }
         .onAppear {
             decodeDiary()
+            // test
+            makeDummyDiary()
             emotionChangeRatio = calcEmotionChangeRatio(recordedDiarysEmotionValues)
             emotionCoefficient = coefficientOfVariation(recordedDiarysEmotionValues)
             makeDiagnosisEmotion()
             makeDiagnosisMessage()
             makeDetailMessage()
-            makeDummyDiary()
         }
     }
     
@@ -365,16 +366,19 @@ struct EmotionRecord: View {
     ]
     
     private func makeDummyDiary() {
-        if recordedDiarys.count == 1 {
-            var dummys = [Diary]()
+        // test
+//        if recordedDiarys.count == 1 {
             for data in testEmotionDatas {
-                dummys.append(Diary(date: data.key, emotionValue: data.value, content: "오늘의 일지는 아침에 일어난 것부터 시작해서 저녁시간 까지의 기록입니다. 이 일지는 \(data.key)일에 작성되었습니다."))
+                if let index = recordedDiarys.firstIndex(where: { $0.date == data.key }) {
+                    recordedDiarys[index] = Diary(date: data.key, emotionValue: data.value, content: "이 일지는 \(data.key)일에 작성된 테스트 일지입니다.")
+                } else {
+                    recordedDiarys.append(Diary(date: data.key, emotionValue: data.value, content: "이 일지는 \(data.key)일에 작성된 테스트 일지입니다."))
+                }
             }
-            recordedDiarys += dummys
             if let data = try? JSONEncoder().encode(recordedDiarys) {
                 recordedDiarysAppStorage = data
             }
-        }
+//        }
     }
 }
 

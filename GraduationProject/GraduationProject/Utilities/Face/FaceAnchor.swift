@@ -69,10 +69,10 @@ final class FaceAnchor: NSObject {
     
     private func isFret(value: CGFloat) {
         switch value {
-        case 0.5..<1:
+        case 0.45..<1:
             expression = "😡"
             delegate?.updateIsPositive(to: -1)
-        case 0.25..<0.5:
+        case 0.25..<0.45:
             expression = "😠"
             delegate?.updateIsPositive(to: -1)
         default: 
