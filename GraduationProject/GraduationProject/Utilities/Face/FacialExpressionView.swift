@@ -87,12 +87,6 @@ extension FacialExpressionController: ARSessionDelegate, FaceAnchorDelegate {
         self.expressionsOfRecognized.insert(expression)
         emotionManager.setEmotion(expression)
     }
-    
-    func updateIsPositive(to value: Int) {
-        if emotionManager.isAnalyzing {
-            emotionManager.isPositive += value
-        }
-    }
 }
 
 struct FacialExpressionViewRefer: UIViewControllerRepresentable {

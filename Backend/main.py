@@ -21,7 +21,7 @@ headers = {
 
 # google gemini를 사용하였습니다.
 # defaultHistory는 일단 심리상담을 해주도록 기본 설정을 해놓은 변수입니다.
-geminiApiKey = "geminikey"
+geminiApiKey = "fill"
 genai.configure(api_key= geminiApiKey)
 model = genai.GenerativeModel("gemini-1.5-flash")
 defaultHistory = [

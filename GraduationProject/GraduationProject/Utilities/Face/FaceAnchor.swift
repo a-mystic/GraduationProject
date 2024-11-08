@@ -9,7 +9,6 @@ import ARKit
 
 protocol FaceAnchorDelegate: AnyObject {
     func updateExpression(expression: String)
-    func updateIsPositive(to value: Int)
 }
 
 final class FaceAnchor: NSObject {
@@ -26,9 +25,13 @@ final class FaceAnchor: NSObject {
     private func mouth(_ faceAnchor: ARFaceAnchor) {
         let mouthSmileLeft = faceAnchor.blendShapes[.mouthSmileLeft] as? CGFloat ?? 0
         let mouthSmileRight = faceAnchor.blendShapes[.mouthSmileRight] as? CGFloat ?? 0
+        let mouthFrownLeft = faceAnchor.blendShapes[.mouthFrownLeft] as? CGFloat ?? 0
+        let mouthFrownRight = faceAnchor.blendShapes[.mouthFrownRight] as? CGFloat ?? 0
         let smile = (mouthSmileLeft + mouthSmileRight) / 2
+        let frown = (mouthFrownLeft + mouthFrownRight) / 2
         DispatchQueue.main.async { [weak self] in
             self?.isSmile(value: smile)
+            self?.isFrown(value: frown)
         }
     }
     
@@ -57,12 +60,20 @@ final class FaceAnchor: NSObject {
         switch value {
         case 0.5..<1: 
             expression = "😁"
-            delegate?.updateIsPositive(to: 1)
         case 0.2..<0.5:
             expression = "🙂"
-            delegate?.updateIsPositive(to: 1)
         default: 
             expression = ""
+        }
+        delegate?.updateExpression(expression: expression)
+    }
+    
+    private func isFrown(value: CGFloat) {
+        switch value {
+        case 0.2..<1:
+            expression = "🙁"
+        default:
+            break
         }
         delegate?.updateExpression(expression: expression)
     }
@@ -71,10 +82,8 @@ final class FaceAnchor: NSObject {
         switch value {
         case 0.45..<1:
             expression = "😡"
-            delegate?.updateIsPositive(to: -1)
         case 0.25..<0.45:
             expression = "😠"
-            delegate?.updateIsPositive(to: -1)
         default: 
             break
         }
@@ -85,7 +94,6 @@ final class FaceAnchor: NSObject {
         switch value {
         case 0.2..<1: 
             expression = "😮"
-            delegate?.updateIsPositive(to: -1)
         default: 
             break
         }

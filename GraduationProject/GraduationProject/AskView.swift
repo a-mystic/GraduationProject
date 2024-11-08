@@ -207,14 +207,6 @@ struct AskView: View {
         .buttonStyle(.borderedProminent)
     }
     
-    private var sumOfEmotionValues: Int {
-        var sum = 0
-        emotionManager.faceEmotions.values.forEach { value in
-            sum += value
-        }
-        return sum
-    }
-    
     private enum AnswerState {
         case yes
         case no
@@ -302,23 +294,23 @@ struct AskView: View {
     }
     
     private func createAdvancedEmotionValue(_ value: Double, answer: AnswerState) -> Double {
-        let emotionPositiveAmount = Double(emotionManager.isPositive) / Double(sumOfEmotionValues)
+        let emotionIsEmpty = emotionManager.faceEmotions.values.reduce(0, +)
         var finalEmotionValue: Double = 0
-        if sumOfEmotionValues == 0 || !((answer == .yes && emotionPositiveAmount > 0) || (answer == .no && emotionPositiveAmount < 0)) {
-            if sumOfEmotionValues == 0 {
+        if emotionIsEmpty == 0 || !((answer == .yes && emotionManager.faceEmotionValue > 0) || (answer == .no && emotionManager.faceEmotionValue < 0)) {
+            if emotionIsEmpty == 0 {
                 return value
             }
-            if answer == .yes && emotionPositiveAmount < 0 {
+            if answer == .yes && emotionManager.faceEmotionValue < 0 {
                 if contentsManager.sentimentValue > 0 {
-                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionPositiveAmount * 0.2
+                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionManager.faceEmotionValue * 0.2
                 } else {
-                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionPositiveAmount * -0.2
+                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionManager.faceEmotionValue * -0.2
                 }
-            } else if answer == .no && emotionPositiveAmount > 0 {
+            } else if answer == .no && emotionManager.faceEmotionValue > 0 {
                 if contentsManager.sentimentValue > 0 {
-                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionPositiveAmount * -0.2
+                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionManager.faceEmotionValue * -0.2
                 } else {
-                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionPositiveAmount * 0.2
+                    finalEmotionValue = contentsManager.sentimentValue * 0.8 + emotionManager.faceEmotionValue * 0.2
                 }
             }
             return finalEmotionValue

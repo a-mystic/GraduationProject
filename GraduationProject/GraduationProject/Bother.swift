@@ -98,21 +98,12 @@ struct Bother: View {
         "야외활동" : ["산책", "운동", "쇼핑"]
     ]
     
-    private var sumOfEmotionValues: Int {
-        var sum = 0
-        emotionManager.faceEmotions.values.forEach { value in
-            sum += value
-        }
-        return sum
-    }
-    
-    // main = 야외활동, recommendedCategory = 운동
-    
     private func recommendContent() {
-        let emotionValue = (Double(emotionManager.isPositive) / Double(sumOfEmotionValues)) * 2
-        contentsManager.setSentimentValue(to: emotionValue)
+        print(emotionManager.faceEmotions)
+        print(emotionManager.faceEmotionValue)
+        contentsManager.setSentimentValue(to: emotionManager.faceEmotionValue)
         if let model = try? SnoozeModel(configuration: MLModelConfiguration()),
-           let contentLabel = try? model.prediction(input: .init(Emotion_value: emotionValue)),
+           let contentLabel = try? model.prediction(input: .init(Emotion_value: emotionManager.faceEmotionValue)),
            let recommendedCategory = contentsLabel[Int(contentLabel.Content.rounded())] {
             contentsManager.setRecommendCategory(to: recommendedCategory)
             var mainCategory = ""
@@ -121,7 +112,7 @@ struct Bother: View {
                     mainCategory = item
                 }
             }
-            if emotionValue >= 0 {
+            if emotionManager.faceEmotionValue >= 0 {
                 if selectedPositiveCategories.contains(mainCategory) {
                     if let content = selectedPositiveDetails[mainCategory]?.randomElement() {
                         contentsManager.setRecommendContent(to: content)
@@ -129,7 +120,7 @@ struct Bother: View {
                 } else {
                     contentsManager.setNeedHate(to: true)
                 }
-            } else if emotionValue <= 0 {
+            } else if emotionManager.faceEmotionValue <= 0 {
                 if selectedNegativeCategories.contains(mainCategory) {
                     if let content = selectedNegativeDetails[mainCategory]?.randomElement() {
                         contentsManager.setRecommendContent(to: content)
@@ -236,11 +227,10 @@ struct Bother: View {
     
     private func saveDiary() {
         decodeDiary()
-        let emotionValue = Double(emotionManager.isPositive) / Double(sumOfEmotionValues)
         if let index = recordedDiarys.firstIndex(where: { $0.date == currentDate }) {
-            recordedDiarys[index] = Diary(date: currentDate, emotionValue: emotionValue, content: "이날은 입력하기 귀찮았어요")
+            recordedDiarys[index] = Diary(date: currentDate, emotionValue: emotionManager.faceEmotionValue, content: "이날은 입력하기 귀찮았어요")
         } else {
-            recordedDiarys.append(Diary(date: currentDate, emotionValue: emotionValue, content: "이날은 입력하기 귀찮았어요"))
+            recordedDiarys.append(Diary(date: currentDate, emotionValue: emotionManager.faceEmotionValue, content: "이날은 입력하기 귀찮았어요"))
         }
         if let data = try? JSONEncoder().encode(recordedDiarys) {
             recordedDiarysAppStorage = data

@@ -15,11 +15,27 @@ class FaceEmotionManager: ObservableObject {
         "🙂" : 0,
         "😡" : 0,
         "😠" : 0,
-        "😮" : 0
+        "😮" : 0,
+        "🙁" : 0
     ]
     @Published private(set) var isAnalyzing = false
     @Published var currentEmotion = "😐"
-    @Published var isPositive = 0
+    
+    var faceEmotionValue: Double {
+        var sumOfEmotionValues = 0
+        faceEmotions.values.forEach { value in
+            sumOfEmotionValues += value
+        }
+        var emotionValue = 0
+        for emotion in faceEmotions.keys {
+            if ["😡", "😠", "😮", "🙁"].contains(emotion) {
+                emotionValue -= faceEmotions[emotion]!
+            } else if ["😁", "🙂"].contains(emotion) {
+                emotionValue += faceEmotions[emotion]!
+            }
+        }
+        return Double(emotionValue) / Double(sumOfEmotionValues)
+    }
     
     var currentColor: Color {
         switch currentEmotion {
@@ -29,6 +45,8 @@ class FaceEmotionManager: ObservableObject {
             return .red
         case "😮":
             return .blue
+        case "🙁":
+            return .cyan
         default:
             return .mint
         }
@@ -57,10 +75,10 @@ class FaceEmotionManager: ObservableObject {
             "🙂" : 0,
             "😡" : 0,
             "😠" : 0,
-            "😮" : 0
+            "😮" : 0,
+            "🙁" : 0
         ]
         isAnalyzing = false
         currentEmotion = "😐"
-        isPositive = 0
     }
 }
