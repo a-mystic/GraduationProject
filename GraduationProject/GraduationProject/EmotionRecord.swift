@@ -170,7 +170,7 @@ struct EmotionRecord: View {
                 }
             }
             Text(detailMessage)
-                .font(.body)
+                .font(.caption)
                 .padding()
                 .background(Color.gray.opacity(0.15), in: RoundedRectangle(cornerRadius: 6))
         }
@@ -204,7 +204,7 @@ struct EmotionRecord: View {
                     lhs = firstEmotion
                 }
                 var emotionChangeCount = 0
-                for emotionValue in recordedDiarysEmotionValues {
+                for emotionValue in recordedDiarysEmotionValues[1..<recordedDiarysEmotionValues.count] {
                     let rhs = emotionValue
                     if (lhs * rhs) < 0 {
                         emotionChangeCount += 1
@@ -221,7 +221,7 @@ struct EmotionRecord: View {
                     lhs = firstEmotion
                 }
                 var emotionChangeCount = 0
-                for emotionValue in recordedDiarysEmotionValues {
+                for emotionValue in recordedDiarysEmotionValues[1..<recordedDiarysEmotionValues.count] {
                     let rhs = emotionValue
                     if (lhs * rhs) < 0 {
                         emotionChangeCount += 1
@@ -247,8 +247,15 @@ struct EmotionRecord: View {
     
     private var recordedDiarysEmotionValues: [Double] {
         var values: [Double] = []
-        for recordedDiary in recordedDiarys {
-            values.append(recordedDiary.emotionValue)
+        var days: [String] = []
+        for day in recordedDiarys {
+            days.append(day.date)
+        }
+        days = days.sorted(by: <)
+        for day in days {
+            if let value = recordedDiarys.first(where: { $0.date == day })?.emotionValue {
+                values.append(value)
+            }
         }
         return values
     }
@@ -356,13 +363,13 @@ struct EmotionRecord: View {
     
     // test
     private var testEmotionDatas: [String:Double] = [
-        "2024-10-15" : -0.1,
-        "2024-10-17" : -0.2,
-        "2024-10-18" : 0.3,
-        "2024-10-20" : 0.6,
-        "2024-10-23" : -0.5,
-        "2024-10-25" : 0,
-        "2024-10-27" : -0.66,
+        "2024-10-20" : -0.1,
+        "2024-10-23" : 0.2,
+        "2024-10-25" : -0.3,
+        "2024-10-27" : 0.6,
+        "2024-10-29" : -0.5,
+        "2024-10-30" : 0,
+        "2024-11-04" : -0.66,
     ]
     
     private func makeDummyDiary() {

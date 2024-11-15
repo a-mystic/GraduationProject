@@ -99,8 +99,6 @@ struct Bother: View {
     ]
     
     private func recommendContent() {
-        print(emotionManager.faceEmotions)
-        print(emotionManager.faceEmotionValue)
         contentsManager.setSentimentValue(to: emotionManager.faceEmotionValue)
         if let model = try? SnoozeModel(configuration: MLModelConfiguration()),
            let contentLabel = try? model.prediction(input: .init(Emotion_value: emotionManager.faceEmotionValue)),
@@ -120,6 +118,10 @@ struct Bother: View {
                 } else {
                     contentsManager.setNeedHate(to: true)
                 }
+                if ["산책", "운동", "쇼핑"].contains(recommendedCategory) {
+                    contentsManager.setRecommendCategory(to: "야외활동")
+                    contentsManager.setRecommendContent(to: recommendedCategory)
+                }
             } else if emotionManager.faceEmotionValue <= 0 {
                 if selectedNegativeCategories.contains(mainCategory) {
                     if let content = selectedNegativeDetails[mainCategory]?.randomElement() {
@@ -127,6 +129,10 @@ struct Bother: View {
                     }
                 } else {
                     contentsManager.setNeedHate(to: true)
+                }
+                if ["산책", "운동", "쇼핑"].contains(recommendedCategory) {
+                    contentsManager.setRecommendCategory(to: "야외활동")
+                    contentsManager.setRecommendContent(to: recommendedCategory)
                 }
             }
         }

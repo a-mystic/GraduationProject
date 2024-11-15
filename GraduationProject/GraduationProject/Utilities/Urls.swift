@@ -80,27 +80,32 @@ struct ContentUrls {
         "코미디" : [
             "https://www.youtube.com/@THETHREESTOOGESCOMEDYCHANNEL",
             "https://www.youtube.com/@CorysComedyChannel",
-            "https://www.youtube.com/@ComedyCentral"
+            "https://www.youtube.com/@ComedyCentral",
+            "https://www.youtube.com/@comedycentraloriginals"
         ],
         "모험" : [
             "https://www.youtube.com/@A1ADVENTURE",
             "https://www.youtube.com/@OutdoorBoys",
-            "https://www.youtube.com/@BacktoBasics"
+            "https://www.youtube.com/@BacktoBasics",
+            "https://www.youtube.com/@UniverseAdventure/videos"
                ],
         "다큐멘터리" : [
             "https://www.youtube.com/@FreeDocumentary",
             "https://www.youtube.com/@documentary-channel",
-            "https://www.youtube.com/@NatGeo"
+            "https://www.youtube.com/@NatGeo",
+            "https://www.youtube.com/@ChronicleMedieval/featured"
         ],
         "과학" : [
             "https://www.youtube.com/@learningsciencechannel1894",
             "https://www.youtube.com/@Professor-Bart-Kay-Nutrition",
-            "https://www.youtube.com/@mr.scottssciencechannel9060"
+            "https://www.youtube.com/@mr.scottssciencechannel9060",
+            "https://www.youtube.com/@kurzgesagt"
                ],
         "역사" : [
             "https://www.youtube.com/@HISTORY",
             "https://www.youtube.com/@odyssey",
-            "https://www.youtube.com/@HistoryoftheUniverse"
+            "https://www.youtube.com/@HistoryoftheUniverse",
+            "https://www.youtube.com/@EpichistoryTv"
                ]
     ]
     
@@ -108,32 +113,38 @@ struct ContentUrls {
         "컴퓨터" : [
             "https://www.yes24.com/Product/Goods/72150192",
             "https://www.yes24.com/Product/Goods/122318967",
-            "https://www.yes24.com/Product/Goods/44264704"
+            "https://www.yes24.com/Product/Goods/44264704",
+            "https://www.yes24.com/Product/Goods/11681152"
         ],
         "추리소설" : [
             "https://www.yes24.com/Product/Goods/128917300",
             "https://www.yes24.com/Product/Goods/45353675",
-            "https://www.yes24.com/Product/Goods/126111057"
+            "https://www.yes24.com/Product/Goods/126111057",
+            "https://www.yes24.com/Product/Goods/119559209"
         ],
         "인문학" : [
             "https://www.yes24.com/Product/Goods/125557465",
             "https://www.yes24.com/Product/Goods/134602629",
-            "https://www.yes24.com/Product/Goods/122120495"
+            "https://www.yes24.com/Product/Goods/122120495",
+            "https://www.yes24.com/Product/Goods/86545658"
         ],
         "심리학" : [
             "https://www.yes24.com/Product/Goods/118579613",
             "https://www.yes24.com/Product/Goods/122428190",
-            "https://www.yes24.com/Product/Goods/116599423"
+            "https://www.yes24.com/Product/Goods/116599423",
+            "https://www.yes24.com/Product/Goods/122664283"
                 ],
         "과학" : [
             "https://www.yes24.com/Product/Goods/65067259",
             "https://www.yes24.com/Product/Goods/120230798",
-            "https://www.yes24.com/Product/Goods/17622312"
+            "https://www.yes24.com/Product/Goods/17622312",
+            "https://www.yes24.com/Product/Goods/118680704"
         ],
         "공학" : [
             "https://www.yes24.com/Product/Goods/117008111",
             "https://www.yes24.com/Product/Goods/37011241",
-            "https://www.yes24.com/Product/Goods/128197782"
+            "https://www.yes24.com/Product/Goods/128197782",
+            "https://www.yes24.com/Product/Goods/116857259"
         ],
     ]
 }

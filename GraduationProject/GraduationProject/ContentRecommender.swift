@@ -126,7 +126,7 @@ struct ContentRecommender: View {
             if let url = ContentUrls.musicUrls[contentsManager.recommendContent]?.randomElement() {
                 return url
             }
-            return "https://music.youtube.com/"
+            return "https://open.spotify.com"
         case "유튜브":
             if let url = ContentUrls.youtubeUrls[contentsManager.recommendContent]?.randomElement() {
                 return url
@@ -243,8 +243,8 @@ struct ContentRecommender: View {
 
 #Preview {
     let contentsManager = ContentsManager()
-    contentsManager.setRecommendCategory(to: "야외활동")
-    contentsManager.setRecommendContent(to: "운동")
+    contentsManager.setRecommendCategory(to: "음악")
+    contentsManager.setRecommendContent(to: "")
     return ContentRecommender()
         .environmentObject(contentsManager)
 }

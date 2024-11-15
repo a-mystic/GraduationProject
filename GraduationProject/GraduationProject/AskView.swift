@@ -281,13 +281,21 @@ struct AskView: View {
                 } else {
                     contentsManager.setNeedHate(to: true)
                 }
+                if ["산책", "운동", "쇼핑"].contains(recommendedCategory) {
+                    contentsManager.setRecommendCategory(to: "야외활동")
+                    contentsManager.setRecommendContent(to: recommendedCategory)
+                }
             } else if value <= 0 {
-                if selectedNegativeCategories.contains(mainCategory) {
+                if selectedNegativeCategories.contains(recommendedCategory) {
                     if let content = selectedNegativeDetails[mainCategory]?.randomElement() {
                         contentsManager.setRecommendContent(to: content)
                     }
                 } else {
                     contentsManager.setNeedHate(to: true)
+                }
+                if ["산책", "운동", "쇼핑"].contains(recommendedCategory) {
+                    contentsManager.setRecommendCategory(to: "야외활동")
+                    contentsManager.setRecommendContent(to: recommendedCategory)
                 }
             }
         }

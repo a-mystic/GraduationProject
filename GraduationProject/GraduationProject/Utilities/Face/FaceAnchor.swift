@@ -70,7 +70,7 @@ final class FaceAnchor: NSObject {
     
     private func isFrown(value: CGFloat) {
         switch value {
-        case 0.2..<1:
+        case 0.11..<1:
             expression = "🙁"
         default:
             break

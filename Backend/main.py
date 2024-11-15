@@ -48,7 +48,7 @@ pipeline = [
 @app.get("/sentimentValue")
 async def calcSentimentValue(inputText: str):
     # Test 
-    return {"sentimentValue" : 0.7500819 }
+    # return {"sentimentValue" : 0.7500819 }
     data = {"content" : inputText}
     response = requests.post(naverApiUrl, data=json.dumps(data), headers=headers).json()
     maxConfidence = max(response["document"]["confidence"], key=response["document"]["confidence"].get)
